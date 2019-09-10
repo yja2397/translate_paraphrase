@@ -83,3 +83,21 @@ $('#target').on('submit', function(e){
         // send the message
     submit_message(input_message);
 });
+
+function copy(){
+    if ($("#writeInput").length){
+        var copyText = document.getElementById("writeInput");
+    
+        copyText.select();
+        copyText.setSelectionRange(0,99999);
+    
+        document.execCommand("copy");
+    
+        alert("복사되었습니다.");
+    
+        console.log(copyText.value);
+
+    }else{
+        alert("복사할 내용이 없습니다.")
+    }
+}

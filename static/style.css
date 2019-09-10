@@ -182,6 +182,12 @@ header {
     vertical-align: middle;
 }
 
+#writeInput{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
 #view{
     color: gray;
     display: table;
@@ -191,6 +197,12 @@ header {
 #view span{
     display:table-cell;
     vertical-align: middle;
+}
+
+#viewInput{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
 }
 
 ::-webkit-scrollbar{width: 16px;}
