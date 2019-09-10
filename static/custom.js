@@ -36,10 +36,11 @@ function submit_message(message) {
 		}
 	}
 }
+
 i = 0;
 setInterval(function() {
     i = ++i % 4;
-    $(".loading").text("Loading Detail Information " + Array(i+1).join("."));
+    $(".loading").text("Loading sentences " + Array(i+1).join("."));
 }, 800);
 
 
@@ -54,6 +55,8 @@ $('#target').on('submit', function(e){
       return
     }
 
+    $conversation_view.empty()
+
     $conversation_view.append(`
         <div class="chat-bubble me">
             <span class="chat-content">
@@ -65,7 +68,7 @@ $('#target').on('submit', function(e){
     $conversation_view.append(`
         <div class="chat-bubble" id="loading">
             <span class="chat-content">
-                <b>...</b>
+                <b class="loading">Loading sentences</b>
             </span>
         </div>
 	`);
