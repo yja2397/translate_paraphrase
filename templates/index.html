@@ -18,9 +18,17 @@
     </span>
     <span id="profile">
         <!-- {% if current_user.is_authenticated %} -->
-        <a src="#">
-            <i class="fa fa-user" aria-hidden="true"></i>
-        </a>
+        
+        <ul class="menu">
+            <li>
+                <i class="fa fa-user-o" aria-hidden="true"></i>
+                <ul>
+                    <a href="para.html"><li><i class="fa fa-file-text-o" aria-hidden="true"></i></li></a>
+                    <a href="sen.html"><li><i class="fa fa-file-word-o" aria-hidden="true"></i></li></a>
+                </ul>
+            </li>
+        </ul>
+        
         <!-- {% else %}
             <a src="#">
                 <i class="fa fa-user" aria-hidden="true"></i>
@@ -64,9 +72,9 @@
         </div>
     </div>
 </article>
-<nav style="float:left;">
-    <div class="paragraph" style="margin-left:70px;">
-        <div id="write" style="width:600px; height: 250px; margin:20px; border:1px solid black;">
+<nav>
+    <div class="paragraph">
+        <div id="write" class="edit">
             <span>
                 검색한 결과 오른쪽의 &nbsp;<img class="insert" src="insert.png" />를 눌러보세요.
             </span>
@@ -74,7 +82,7 @@
             <!-- <textarea id="writeInput" cols="40" rows="8" >Hello World</textarea> -->
             
         </div>
-        <div id="view" style="width:600px; height: 250px; margin:20px; border:1px solid black;">
+        <div id="view" class="edit">
             <span>
                 위 문단이 번역된 결과가 여기에 표시됩니다.
             </span>
