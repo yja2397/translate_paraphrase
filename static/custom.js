@@ -1,39 +1,43 @@
-function submit_message(message) {
-    $.post( "/send_message", {
-        message: message
+// const pusher2 = new Pusher("777da506507b1625a6b2", {
+//     cluster: "ap3",
+// 	encrypted: true
+// });
+
+// // Subscribe to translate-searcher channel
+// const channel = pusher2.subscribe('translate-searcher');
+
+function translate(message) {
+    
+    console.log('번역기.');
+
+    $.post("/translate", {
+        message: message,
     }, handle_response);
-	
 
     function handle_response(data) {
-      // append the bot repsonse to the div
-		if(`${data.result}` == "null"){
-			console.log(`${data.result}`);
+    
+        console.log('응답.');
+
+        // append the bot repsonse to the div
+        $('.conversation-view').empty(); // 안의 내용 지우기
+        
+		if(`${data.result}` == "null"){ // 내용이 없어도 일단 입력내용 송출
+			console.log(`${data.result}`); // 에러코드 보여주기
 			$('.conversation-view').append(`
-				<div class="chat-bubble">
-					<span classs="chat-content">
-						${data.message}
-					</span>
-				</div>
+                <div class="input">
+                    ${data.message}
+                </div>
 			`);
-          // remove the loading indicator
-			$( "#loading" ).remove();
-		} else{
+		} else{ // 결과 송출
 			$('.conversation-view').append(`
-				<div class="chat-bubble">
-					<span class="chat-content">
-						${data.message}
-					</span>
-				</div>
-				<div class="chat-bubble result">
-					<span class="chat-content">
-						${data.result}
-					</span>
-				</div>
+                <div class="input">
+                    ${data.message}
+                </div>
+                ${data.result}
 			`);
-          // remove the loading indicator
-			$( "#loading" ).remove();
-		
-		}
+        }
+        // remove the loading indicator
+        $( "#loading" ).remove();
 	}
 }
 
@@ -55,7 +59,7 @@ $('#target').on('submit', function(e){
       return
     }
 
-    $conversation_view.empty()
+    $conversation_view.empty();
 
     $conversation_view.append(`
         <div class="chat-bubble me">
@@ -79,9 +83,10 @@ $('#target').on('submit', function(e){
     var div = document.getElementsByClassName("conversation-view")[0];
     div.scrollTop = div.scrollHeight;
 
-	console.log(input_message);
-        // send the message
-    submit_message(input_message);
+    console.log(input_message);
+    
+    // send the message
+    translate(input_message);
 });
 
 function copy(){
@@ -99,5 +104,22 @@ function copy(){
 
     }else{
         alert("복사할 내용이 없습니다.")
+    }
+}
+
+function goPara(message){
+    var para = $('.paragraph')
+    if ($("#write span").length){
+        $("#write span").remove();
+        $("#write").append(`
+            <textarea id="writeInput" cols="40" rows="8" >
+                ${message}
+            </textarea>
+        `)
+    }else{
+        text = $("#writeInput")
+        $('#writeInput').append(`
+            ${message}
+        `)
     }
 }

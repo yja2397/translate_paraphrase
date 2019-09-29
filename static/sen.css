@@ -9,6 +9,7 @@ html, body {
     font-weight: 400;
     box-sizing: border-box;
     color : #34314c;
+    min-width:760px;
 }
 
 *, *::before, *::after {
@@ -17,16 +18,11 @@ html, body {
     padding: 0;
 }
 
-nav{
-    min-width:760px;
-    max-width:50%;
-    float:left;
-}
-
 article{
-    min-width: 760px;
-    max-width: 50%;
-    float: right;
+    /* min-width: 760px; */
+    /* max-width: 100%; */
+    float:left;
+    width:100%;
 }
 
 header {
@@ -64,95 +60,19 @@ header {
     border: 1px solid #34314c;
 }
 
-.chat-content .movie{
-    font-size : 10px;
-    padding : 5px;
-    float:left;
+.board{
+    height:730px;
+    width:100%;
 }
 
-
-.chat-window {
-    margin:auto;
-    width:80%;
-}
-
-.conversation-view {
-    width: 100%;
-    height: 500px;
-    padding: 20px 30px;
-    background-color: white;
-    overflow:auto;
-}
-
-.text-input {
-    width: 100%;
-    padding: 20px 20px;
-    border: none;
-}
-
-.chat-bubble {
-    font-size: 17px;
-    margin-bottom: 20px;
-    width:80%;
-    display: flex;
-    justify-content: flex-start;
-    float:left;
-}
-
-.chat-bubble.result{
-    background-color: #ff7373d7;
-    width: 80%;
-    display: table;
-    position: relative;
-    min-height: 56px;
-}
-
-.chat-bubble.result img {
-    float : right;
-    width : 51px;
-    height : 50px;
-    border-radius: 10px;
-    border: 1.8px solid #34314c;
-    margin-left: 14px;
-    margin-right: 15px;
-    position: absolute;
-    bottom: 2px;
-    vertical-align: middle;
-    opacity: 0.6;
-    cursor: pointer;
-}
-
-.chat-bubble.result img:hover{
-    background-color: #ff7373ad;
-    opacity: 1;
-}
-
-.chat-bubble.me .chat-content {
-    background-color:white;
-    color: #2484a7;
-}
-
-.chat-content {
-    display: inline-block;
-    padding: 8px 15px;
-    color: #34314c;
-    display:table-cell;
-    vertical-align: middle;
-}
-
-.loading{
-    display: inline-block;
-    padding: 8px 15px;
-    color: #34314c;
-    display:table-cell;
-    vertical-align: middle;
-    font-size: 17px;
-    background-color: #ffc952;
-}
 
 .paragraph{
     margin:auto;
     width:80%;
+}
+
+.para{
+    height:60px;
 }
 
 .para button{
@@ -253,6 +173,58 @@ header {
 
 a:hover{
     text-decoration: none;
+}
+
+.english div{
+    float:right;
+    /* margin:auto; */
+    margin-right:0;
+    margin-top:10px;
+    width:80%;
+    height:35px;
+    border:1px solid #34314c7a;
+    line-height: 35px;
+    text-indent: 10px;
+}
+
+.english div:hover{
+    background-color: #34314c46;
+}
+
+.translate{
+    /* min-width:40%; */
+    width:50%;
+    display:inline;
+    float: left;
+}
+
+.english{
+    width:50%;
+    display:inline;
+    float:left;
+}
+
+.translate div{
+    /* float:left; */
+    /* margin:auto; */
+    margin-top:10px;
+    width:80%;
+    height:35px;
+    border:1px solid #34314c7a;
+    line-height: 35px;
+    text-indent: 10px;
+}
+
+.translate div:hover{
+    background-color: #34314c46;
+}
+
+.modify{
+    margin-right:48px;
+}
+
+.modify:hover{
+    cursor: pointer;
 }
 
 ::-webkit-scrollbar{width: 16px;}
