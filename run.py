@@ -14,18 +14,12 @@ import os
 import sys
 import urllib.request
 
+from module import db # db
+
 h = httplib2.Http()
 okt = Okt()
 
 app = Flask(__name__)
-
-# channels_client = pusher.Pusher(
-#   app_id='870917',
-#   key='777da506507b1625a6b2',
-#   secret='8e40e4da9fddae82b42d',
-#   cluster='ap3',
-#   ssl=True
-# )
 
 @app.route('/')
 def index():
@@ -78,6 +72,28 @@ def papago(message): # 파파고 번역
   else:
     return "Error Code:" + rescode
 
+@app.route('/insert', methods=['POST'])
+def insert():
+  message = request.form['message']
+
+  db_class = db.Database()
+
+  sql     = "SELECT sentence FROM TS.sentence WHERE sentence = '%s'"% (message)
+  data = db_class.executeOne(sql)
+
+  if not data:
+    sql     = "INSERT INTO TS.sentence(sentence) \
+                VALUES('%s')"% (message)
+    db_class.execute(sql)
+
+  sql     = "UPDATE TS.sentence \
+              SET searchCnt = searchCnt + 1 \
+              WHERE sentence='%s'"% (message)
+  db_class.execute(sql)
+
+  db_class.commit()
+
+ 
 
 # run Flask app
 if __name__ == "__main__":

@@ -108,6 +108,10 @@ function copy(){
 }
 
 function goPara(message){
+    $.post("/insert", {
+        message: message,
+    }); // db 삽입
+
     var para = $('.paragraph')
     if ($("#write span").length){
         $("#write span").remove();
