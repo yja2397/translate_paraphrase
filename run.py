@@ -25,6 +25,17 @@ app = Flask(__name__)
 def index():
   return render_template('index.html')
 
+@app.route('/index.html')
+def index2():
+  return render_template('index.html')
+
+@app.route('/para.html')
+def para():
+  return render_template('para.html')
+
+@app.route('/sen.html')
+def sen():
+  return render_template('sen.html')
 
 @app.route('/translate', methods=['POST'])
 def translate():
