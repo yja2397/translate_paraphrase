@@ -104,6 +104,8 @@ def insert():
 
   db_class.commit()
 
+  return
+
  
 
 # run Flask app
