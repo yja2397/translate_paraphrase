@@ -10,11 +10,11 @@ from konlpy.tag import Okt
 from collections import Counter
 import pymysql
 from datetime import datetime
-import os
 import sys
-import urllib.request
 
 from module import db # db
+from module import user
+from module import translate
 
 h = httplib2.Http()
 okt = Okt()
@@ -41,7 +41,8 @@ def sen():
 def translate():
   message = request.form['message']
 
-  trans = papago(message) # 파파고 번역
+  tr = translate.translate()
+  trans = tr.papago(message) # 파파고 번역
 
   response = ""
 
@@ -58,30 +59,6 @@ def translate():
 
   return jsonify(response_text)
 
-def papago(message): # 파파고 번역
-
-  client_id = "daFbPHQo9YDVHRyjaPgy"
-  client_secret = "P6qPCamZnK"
-  # 클라이언트 id와 secret
-  
-  encText = urllib.parse.quote(message)
-  data = "source=ko&target=en&text=" + encText
-  url = "https://openapi.naver.com/v1/papago/n2mt"
-  
-  request = urllib.request.Request(url)
-  request.add_header("X-Naver-Client-Id",client_id)
-  request.add_header("X-Naver-Client-Secret",client_secret)
-  response = urllib.request.urlopen(request, data=data.encode("utf-8"))
-  rescode = response.getcode()
-
-  if(rescode==200):
-    response_body = response.read()    
-    res = response_body.decode('utf-8')
-    i = json.loads(res)
-
-    return i['message']['result']['translatedText']
-  else:
-    return "Error Code:" + rescode
 
 @app.route('/insert', methods=['POST'])
 def insert():
@@ -106,7 +83,38 @@ def insert():
 
   return
 
- 
+@app.route('/login', methods=['POST'])
+def login():
+  userid = session.form['id']
+  pswd = session.form['pswd'] 
+
+  mM = user.memberManage()
+  connect = mM.login(userid, pswd)
+
+  if connect == 1:
+    response_text = {"alert" : "잘못된 아이디입니다."}
+  elif connect == 2:
+    response_text = {"alert" : "비밀번호가 잘못되었습니다."}
+  else:
+    response_text = {"alert" : "환영합니다. " + connect + "님."}
+  
+  return jsonify(response_text)
+
+@app.route('/join', methods=['POST'])
+def join():
+  userid = session.form['id']
+  pswd = session.form['pswd'] 
+
+  mM = user.memberManage()
+  connect = mM.join(userid, pswd)
+
+  if connect == 0:
+    response_text = {"alert" : "회원가입이 성공적으로 진행되었습니다.\n 자동 로그인됩니다."}
+  else:
+    response_text = {"alert" : "이미 등록된 아이디입니다."}
+
+  return jsonify(response_text)
+  
 
 # run Flask app
 if __name__ == "__main__":
