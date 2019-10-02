@@ -37,8 +37,16 @@ def para():
 def sen():
   return render_template('sen.html')
 
+@app.route('/login.html')
+def log():
+  return render_template('login.html')
+
+@app.route('/join.html')
+def joi():
+  return render_template('join.html')
+
 @app.route('/translate', methods=['POST'])
-def translate():
+def trans():
   message = request.form['message']
 
   tr = translate.translate()
@@ -85,35 +93,37 @@ def insert():
 
 @app.route('/login', methods=['POST'])
 def login():
-  userid = session.form['id']
-  pswd = session.form['pswd'] 
+  userid = request.form['login']
+  pswd = request.form['pswd'] 
 
   mM = user.memberManage()
   connect = mM.login(userid, pswd)
 
   if connect == 1:
-    response_text = {"alert" : "잘못된 아이디입니다."}
+    return render_template('login.html')
   elif connect == 2:
-    response_text = {"alert" : "비밀번호가 잘못되었습니다."}
+    return render_template('login.html')
   else:
-    response_text = {"alert" : "환영합니다. " + connect + "님."}
-  
-  return jsonify(response_text)
+    session['userid'] = userid
+    session['pswd'] = pswd
+    return render_template('index.html')
 
 @app.route('/join', methods=['POST'])
 def join():
-  userid = session.form['id']
-  pswd = session.form['pswd'] 
+  userid = request.form['login']
+  pswd = request.form['pswd'] 
 
   mM = user.memberManage()
   connect = mM.join(userid, pswd)
 
   if connect == 0:
-    response_text = {"alert" : "회원가입이 성공적으로 진행되었습니다.\n 자동 로그인됩니다."}
+    session['logged_in'] = True
+    connect = mM.login(userid, pswd)
+    session['userid'] = userid
+    session['pswd'] = pswd
+    return render_template('index.html')
   else:
-    response_text = {"alert" : "이미 등록된 아이디입니다."}
-
-  return jsonify(response_text)
+    return render_template('join.html')
   
 
 # run Flask app

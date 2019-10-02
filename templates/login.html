@@ -1,0 +1,47 @@
+<!-- /templates/index.html -->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/login.css">
+    <title>Translate Searcher</title>
+</head>
+<body>
+<article>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+          <h2 class="active"> Sign In </h2>
+          <h2 class="inactive underlineHover"><a href="join.html"> Sign Up </a></h2>
+      
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <img src="{{ url_for('static', filename='insert.png') }}" id="icon" alt="User Icon" />
+          </div>
+      
+          <!-- Login Form -->
+          <form action="login" method="POST">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+            <input type="text" id="password" class="fadeIn third" name="pswd" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Log In">
+          </form>
+      
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="index.html">Go to mainpage</a>
+        </div>
+    
+        </div>
+      </div>
+</article>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="../static/custom.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</body>
+</html>
