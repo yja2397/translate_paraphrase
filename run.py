@@ -21,27 +21,27 @@ okt = Okt()
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
   return render_template('index.html')
 
-@app.route('/index.html')
+@app.route('/index.html', methods=['GET', 'POST'])
 def index2():
   return render_template('index.html')
 
-@app.route('/para.html')
+@app.route('/para.html', methods=['GET', 'POST'])
 def para():
   return render_template('para.html')
 
-@app.route('/sen.html')
+@app.route('/sen.html', methods=['GET', 'POST'])
 def sen():
   return render_template('sen.html')
 
-@app.route('/login.html')
+@app.route('/login.html', methods=['GET', 'POST'])
 def log():
   return render_template('login.html')
 
-@app.route('/join.html')
+@app.route('/join.html', methods=['GET', 'POST'])
 def joi():
   return render_template('join.html')
 
@@ -52,6 +52,8 @@ def trans():
   tr = translate.translate()
   trans = tr.papago(message) # 파파고 번역
 
+  transSet = trans.replace("'", "\\'")
+
   response = ""
 
   response += """
@@ -59,9 +61,9 @@ def trans():
       <span class="chat-content">
         {0}
       </span>
-      <img class="insert" src="/static/insert.png" onclick="goPara('{0}')"/>
+      <img class="insert" src="/static/insert.png" onclick='goPara("{1}")'/>
     </div>
-  """.format(trans)
+  """.format(trans, transSet)
 
   response_text = {"message":  message, "result": response}
 
@@ -74,58 +76,68 @@ def insert():
 
   db_class = db.Database()
 
-  sql     = "SELECT sentence FROM TS.sentence WHERE sentence = '%s'"% (message)
+  sql     = """SELECT sentence FROM TS.sentence WHERE sentence = '%s'"""% (message)
   data = db_class.executeOne(sql)
 
   if not data:
-    sql     = "INSERT INTO TS.sentence(sentence) \
-                VALUES('%s')"% (message)
+    sql     = """INSERT INTO TS.sentence(sentence) \
+                VALUES('%s')"""% (message)
     db_class.execute(sql)
 
-  sql     = "UPDATE TS.sentence \
+  sql     = """UPDATE TS.sentence \
               SET searchCnt = searchCnt + 1 \
-              WHERE sentence='%s'"% (message)
+              WHERE sentence='%s'"""% (message)
   db_class.execute(sql)
 
   db_class.commit()
 
-  return
+  return 'commit'
 
 @app.route('/login', methods=['POST'])
 def login():
-  userid = request.form['login']
+  userid = request.form['userid']
   pswd = request.form['pswd'] 
 
   mM = user.memberManage()
   connect = mM.login(userid, pswd)
 
-  if connect == 1:
-    return render_template('login.html')
-  elif connect == 2:
-    return render_template('login.html')
-  else:
+  if connect == 0:
+    session['logged_in'] = True
     session['userid'] = userid
     session['pswd'] = pswd
-    return render_template('index.html')
+
+  response_text = {"connect": connect, "id" : userid}
+
+  return jsonify(response_text)
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+  session['logged_in'] = False
+
+  return 'logout'
+  
 
 @app.route('/join', methods=['POST'])
 def join():
-  userid = request.form['login']
+  userid = request.form['userid']
   pswd = request.form['pswd'] 
 
   mM = user.memberManage()
   connect = mM.join(userid, pswd)
 
   if connect == 0:
-    session['logged_in'] = True
     connect = mM.login(userid, pswd)
+    session['logged_in'] = True
     session['userid'] = userid
     session['pswd'] = pswd
-    return render_template('index.html')
-  else:
-    return render_template('join.html')
+  
+  response_text = {"connect":  connect, "id" : userid}
+
+  return jsonify(response_text)
   
 
 # run Flask app
 if __name__ == "__main__":
+  app.secret_key = 'super secret key'
+  app.config['SESSION_TYPE'] = 'filesystem'
   app.run()

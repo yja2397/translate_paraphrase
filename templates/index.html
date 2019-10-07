@@ -18,15 +18,19 @@
         Translate Searcher
     </span>
     <span id="profile">
+        {% block body %}
+        {% if session['logged_in'] %}
         <ul class="menu">
-            <li>
-                <a href="login.html"><i class="fa fa-user-o" aria-hidden="true"></i></a>
-                <ul>
-                    <a href="para.html"><li><i class="fa fa-file-text-o" aria-hidden="true"></i></li></a>
-                    <a href="sen.html"><li><i class="fa fa-file-word-o" aria-hidden="true"></i></li></a>
-                </ul>
-            </li>
+            <a href="#!" onclick="logout()"><li><i class="fa fa-user-o" aria-hidden="true"></i></li></a>
+            <a href="para.html"><li><i class="fa fa-file-text-o" aria-hidden="true"></i></li></a>
+            <a href="sen.html"><li><i class="fa fa-file-word-o" aria-hidden="true"></i></li></a>
         </ul>
+        {% else %}
+        <ul class="menu">
+            <a href="login.html"><li><i class="fa fa-user-o" aria-hidden="true"></i></li></a>
+        </ul>
+        {% endif %}
+        {% endblock %}
     </span>
 </header>
 <article>

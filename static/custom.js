@@ -1,22 +1,9 @@
-// const pusher2 = new Pusher("777da506507b1625a6b2", {
-//     cluster: "ap3",
-// 	encrypted: true
-// });
-
-// // Subscribe to translate-searcher channel
-// const channel = pusher2.subscribe('translate-searcher');
-
 function translate(message) {
-    
-    console.log('번역기.');
-
     $.post("/translate", {
         message: message,
     }, handle_response);
 
     function handle_response(data) {
-    
-        console.log('응답.');
 
         // append the bot repsonse to the div
         $('.conversation-view').empty(); // 안의 내용 지우기
@@ -46,6 +33,56 @@ setInterval(function() {
     i = ++i % 4;
     $(".loading").text("Loading sentences " + Array(i+1).join("."));
 }, 800);
+
+$('#login').on('submit', function(e){
+    e.preventDefault();
+
+    console.log("HO");
+
+    $.post("/login", {
+        userid: $('#userid').val(),
+        pswd: $('#pswd').val(),
+    }, handle_response);
+
+    console.log("NO?");
+
+    function handle_response(data) {
+        console.log("ON?");
+
+        if(`${data.connect}` == "0"){
+            location.href="index.html";
+        }else{
+            if(`${data.connect}` == "1"){
+                alert("존재하지 않는 아이디입니다.");
+            }else{
+                alert("비밀번호가 틀렸습니다.");
+            }
+            location.href="login.html";
+        }
+    }
+});
+
+$('#join').on('submit', function(e){
+    e.preventDefault();
+
+    alert($('#userid').val());
+
+    $.post("/join", {
+        userid: $('#userid').val(),
+        pswd: $('#pswd').val(),
+    }, handle_response);
+
+    function handle_response(data) {
+        if(`{data.message}` == "0"){
+            alert("회원가입을 축하합니다. 자동 로그인됩니다.");
+            location.href="index.html";
+        }else{
+            alert("이미 존재하는 아이디입니다.")
+            location.href="join.html";
+        }
+    }
+
+});
 
 
 $('#target').on('submit', function(e){
@@ -104,6 +141,13 @@ function copy(){
 
     }else{
         alert("복사할 내용이 없습니다.")
+    }
+}
+
+function logout(){
+    if(confirm('정말 로그아웃하시겠습니까?')){
+        $.post("/logout");
+        location.href="index.html";
     }
 }
 

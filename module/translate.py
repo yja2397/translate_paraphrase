@@ -1,4 +1,5 @@
 import urllib.request
+import json
 
 class translate():
     def papago(self, message): # 파파고 번역
