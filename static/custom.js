@@ -65,15 +65,13 @@ $('#login').on('submit', function(e){
 $('#join').on('submit', function(e){
     e.preventDefault();
 
-    alert($('#userid').val());
-
     $.post("/join", {
         userid: $('#userid').val(),
         pswd: $('#pswd').val(),
     }, handle_response);
 
     function handle_response(data) {
-        if(`{data.message}` == "0"){
+        if(`${data.connect}` == "0"){
             alert("회원가입을 축하합니다. 자동 로그인됩니다.");
             location.href="index.html";
         }else{

@@ -8,6 +8,7 @@ class memberManage():
     def login(self, id, pswd):
         sql     = "SELECT pswd FROM TS.client WHERE id = '%s'"% (id)
         data = self.db.executeOne(sql)
+        self.db.commit()
 
         if not data: # 알맞은 아이디 없음
             return 1
@@ -19,6 +20,7 @@ class memberManage():
     def join(self, id, pswd):
         sql     = "SELECT pswd FROM TS.client WHERE id = '%s'"% (id)
         data = self.db.executeOne(sql)
+        self.db.commit()
 
         if data: # 이미 해당 아이디 있음.
             return 1
@@ -26,6 +28,9 @@ class memberManage():
             sql     = "INSERT INTO TS.client(id, pswd) \
                         VALUES('%s', '%s')"% (id, pswd)
             self.db.execute(sql)
+            self.db.commit()
+
+            print("JOIN US")
 
             return 0
 
@@ -33,16 +38,19 @@ class memberManage():
         
         sql     = "SELECT searchCnt FROM TS.clientsearch WHERE sentence = '%s' and clientid = '%s'"% (sentence, id)
         data = self.db.executeOne(sql)
+        self.db.commit()
 
         if not data:
             sql     = "INSERT INTO TS.clientsearch(sentence, id) \
                         VALUES('%s', '%s')"% (sentence, id)
             self.db.execute(sql)
+            self.db.commit()
 
         sql     = "UPDATE TS.clientsearch \
                     SET searchCnt = searchCnt + 1 \
                     WHERE sentence='%s' and id = '%s'"% (sentence, id)
         self.db.execute(sql)
+        self.db.commit()
 
         return 'commit'
     
@@ -58,6 +66,7 @@ class memberManage():
         sql     = "INSERT INTO TS.clientpara \
                     VALUES('%s', '%s', '%s', '%s')"% (paratitle, id, paragraph, now)
         self.db.execute(sql)
+        self.db.commit()
 
         return 'commit'
 
@@ -65,17 +74,20 @@ class memberManage():
     def findSen(self, id):
         sql     = "SELECT sentence FROM TS.clientsearch WHERE id = '%s'"% (id)
         data = self.db.executeAll(sql)
+        self.db.commit()
 
         return data
 
     def findPara(self, id):
         sql     = "SELECT paratitle, paratime FROM TS.clientpara WHERE id = '%s'"% (id)
         data = self.db.executeAll(sql)
+        self.db.commit()
 
         return data
 
     def lookPara(self, id, paratime):
         sql     = "SELECT paratitle, paragraph FROM TS.clientpara WHERE id = '%s' and paratime = '%s"% (id, paratime)
         data = self.db.executeAll(sql)
+        self.db.commit()
 
         return data

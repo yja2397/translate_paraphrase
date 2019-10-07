@@ -91,6 +91,11 @@ def insert():
 
   db_class.commit()
 
+  if session['logged_in']: # login한 사용자는 저장.
+    mM = user.memberManage()
+
+    mM.insertSen(message, session['userid'])
+
   return 'commit'
 
 @app.route('/login', methods=['POST'])
