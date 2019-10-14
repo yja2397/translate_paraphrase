@@ -43,7 +43,7 @@ header {
 }
 
 #profile{
-    margin-right:80px;
+    margin-right:16px;
 
     background: none;
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
@@ -128,7 +128,51 @@ header {
     border-radius: 10px;
 }
 
+
+.menu{
+    width:200px;
+    padding:10px;
+    margin:0;
+    position:absolute;
+    z-index:2;
+    top: 36px;
+    right: -5px;
+}
+
 .menu li{
+    font-size:23px;
+    margin:5px;
+    list-style:none;
+    /* display: inline-block; */
+
+    color: #f19f9f;
+    
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+    float:right;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 10px;
+    border-radius: 30px;
+    transition: all 0.2s ;
+
+    right:50px;
+    bottom:40px;
+}
+
+.menu li:hover{
+    color: #ff7473;
+}
+
+.menu li a{
+    text-decoration: none;
+    color: #34314c;
+    border:0;
+}
+
+/* .menu li{
     font-size:27px;
     list-style:none;
     color: #ff7473;
@@ -173,7 +217,7 @@ header {
     text-decoration: none;
     color: #34314c;
     border:0;
-}
+} */
 
 a:hover{
     text-decoration: none;

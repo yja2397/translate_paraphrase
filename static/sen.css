@@ -38,7 +38,7 @@ header {
 }
 
 #profile{
-    margin-right:80px;
+    margin-right:16px;
 
     background: none;
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
@@ -124,25 +124,22 @@ header {
     border-radius: 10px;
 }
 
-.menu li{
-    font-size:27px;
-    list-style:none;
-    color: #ff7473;
-}
 
-.menu li ul{
+.menu{
     width:200px;
     padding:10px;
     margin:0;
     position:absolute;
     z-index:2;
+    top: 36px;
     right: -5px;
 }
 
-.menu li ul li{
+.menu li{
     font-size:23px;
     margin:5px;
-    display: inline-block;
+    list-style:none;
+    /* display: inline-block; */
 
     color: #f19f9f;
     
@@ -161,62 +158,74 @@ header {
     bottom:40px;
 }
 
-.menu li ul li:hover{
+.menu li:hover{
     color: #ff7473;
 }
 
-.menu li ul li a{
+.menu li a{
     text-decoration: none;
     color: #34314c;
     border:0;
 }
 
+
 a:hover{
     text-decoration: none;
 }
 
-.english div{
-    float:right;
+#sentence{
+    margin:auto;
+}
+
+.searched{
+    width:80%;
+    margin:auto;
+}
+
+.searched:hover .translate{
+    background-color: #34314c46;
+}
+
+.searched:hover .english{
+    background-color: #34314c46;
+}
+
+.title{
     /* margin:auto; */
     margin-right:0;
     margin-top:10px;
-    width:80%;
     height:35px;
     border:1px solid #34314c7a;
     line-height: 35px;
     text-indent: 10px;
-}
-
-.english div:hover{
-    background-color: #34314c46;
-}
-
-.translate{
-    /* min-width:40%; */
     width:50%;
-    display:inline;
-    float: left;
-}
-
-.english{
-    width:50%;
-    display:inline;
+    text-align: center;
     float:left;
 }
 
-.translate div{
-    /* float:left; */
+.english{
     /* margin:auto; */
+    margin-right:0;
     margin-top:10px;
-    width:80%;
-    height:35px;
+    /* height:35px; */
     border:1px solid #34314c7a;
     line-height: 35px;
     text-indent: 10px;
+    width:50%;
+    float:left;
 }
 
-.translate div:hover{
-    background-color: #34314c46;
+.translate{
+    /* float:left; */
+    /* margin:auto; */
+    margin-top:10px;
+    /* height:35px; */
+    border:1px solid #34314c7a;
+    line-height: 35px;
+    text-indent: 10px;
+    /* min-width:40%; */
+    width:50%;
+    float: left;
 }
 
 .modify{

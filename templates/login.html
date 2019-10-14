@@ -16,26 +16,26 @@
 <article>
     <div class="wrapper fadeInDown">
         <div id="formContent">
-          <!-- Tabs Titles -->
-          <h2 class="active"> Sign In </h2>
-          <h2 class="inactive underlineHover"><a href="join.html"> Sign Up </a></h2>
+            <!-- Tabs Titles -->
+            <h2 class="active"> Sign In </h2>
+            <h2 class="inactive underlineHover"><a href="join.html"> Sign Up </a></h2>
+        
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="{{ url_for('static', filename='insert.png') }}" id="icon" alt="User Icon" />
+            </div>
+        
+            <!-- Login Form -->
+            <form id="login" name="login">
+                <input type="text" id="userid" class="fadeIn second" name="userid" placeholder="id">
+                <input type="password" id="pswd" class="fadeIn third" name="pswd" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
       
-          <!-- Icon -->
-          <div class="fadeIn first">
-            <img src="{{ url_for('static', filename='insert.png') }}" id="icon" alt="User Icon" />
-          </div>
-      
-          <!-- Login Form -->
-          <form id="login" name="login">
-            <input type="text" id="userid" class="fadeIn second" name="userid" placeholder="id">
-            <input type="password" id="pswd" class="fadeIn third" name="pswd" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
-          </form>
-      
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-            <a class="underlineHover" href="index.html">Go to mainpage</a>
-        </div>
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="index.html">Go to mainpage</a>
+            </div>
     
         </div>
       </div>

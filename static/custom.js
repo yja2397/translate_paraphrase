@@ -142,6 +142,25 @@ function copy(){
     }
 }
 
+function save(){    
+    if ($("#writeInput").length){
+        text = $.trim($("#writeInput").text());
+
+        $.post("/save", {
+            text: text,
+        }); // db 삽입
+    
+        function handle_response(data) {
+            alert(`${data.message}`);
+        }
+
+    }else{
+        alert("저장할 내용이 없습니다.")
+    }
+
+
+}
+
 function logout(){
     if(confirm('정말 로그아웃하시겠습니까?')){
         $.post("/logout");
@@ -149,7 +168,11 @@ function logout(){
     }
 }
 
-function goPara(message){
+function goPara(order){
+    message = $.trim($('.order' + order).text());
+
+    console.log(message);
+
     $.post("/insert", {
         message: message,
     }); // db 삽입
@@ -163,9 +186,15 @@ function goPara(message){
             </textarea>
         `)
     }else{
-        text = $("#writeInput")
-        $('#writeInput').append(`
-            ${message}
+        text = $.trim($("#writeInput").text() + " " + message);
+        
+        $("#writeInput").remove();
+
+        $("#write").append(`
+            <textarea id="writeInput" cols="40" rows="8" >
+                ${text}
+            </textarea>
         `)
+
     }
 }

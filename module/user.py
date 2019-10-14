@@ -5,8 +5,8 @@ class memberManage():
     def __init__(self):
         self.db = db.Database()
 
-    def login(self, id, pswd):
-        sql     = "SELECT pswd FROM TS.client WHERE id = '%s'"% (id)
+    def login(self, userid, pswd):
+        sql     = "SELECT pswd FROM TS.client WHERE id = '%s'"% (userid)
         data = self.db.executeOne(sql)
         self.db.commit()
 
@@ -17,8 +17,8 @@ class memberManage():
         else: # 비밀번호 오류
             return 2
 
-    def join(self, id, pswd):
-        sql     = "SELECT pswd FROM TS.client WHERE id = '%s'"% (id)
+    def join(self, userid, pswd):
+        sql     = "SELECT pswd FROM TS.client WHERE id = '%s'"% (userid)
         data = self.db.executeOne(sql)
         self.db.commit()
 
@@ -26,7 +26,7 @@ class memberManage():
             return 1
         else: # 회원가입
             sql     = "INSERT INTO TS.client(id, pswd) \
-                        VALUES('%s', '%s')"% (id, pswd)
+                        VALUES('%s', '%s')"% (userid, pswd)
             self.db.execute(sql)
             self.db.commit()
 
@@ -34,59 +34,63 @@ class memberManage():
 
             return 0
 
-    def insertSen(self, sentence, id):
+    def insertSen(self, sentence, userid):
         
-        sql     = "SELECT searchCnt FROM TS.clientsearch WHERE sentence = '%s' and clientid = '%s'"% (sentence, id)
+        sql     = "SELECT searchCnt FROM TS.clientsearch WHERE sentence = '%s' and clientid = '%s'"% (sentence, userid)
         data = self.db.executeOne(sql)
         self.db.commit()
 
         if not data:
-            sql     = "INSERT INTO TS.clientsearch(sentence, id) \
-                        VALUES('%s', '%s')"% (sentence, id)
+            sql     = "INSERT INTO TS.clientsearch(sentence, clientid) \
+                        VALUES('%s', '%s')"% (sentence, userid)
+
+            print(sql)
             self.db.execute(sql)
             self.db.commit()
 
         sql     = "UPDATE TS.clientsearch \
                     SET searchCnt = searchCnt + 1 \
-                    WHERE sentence='%s' and id = '%s'"% (sentence, id)
+                    WHERE sentence='%s' and clientid = '%s'"% (sentence, userid)
         self.db.execute(sql)
         self.db.commit()
 
         return 'commit'
     
-    def insertPara(self, clientid, paragraph, paratitle=None):
+    def insertPara(self, userid, paragraph, paratitle=None):
+
+        paragraph = paragraph.replace("'", "''")
         
         now = datetime.now()
-        now = '%s-%s-%s %s:%s:%s' % (now.year, now.moth, now.day, now.hour, now.minute, now.second)
+        now = '%s-%s-%s %s:%s:%s' % (now.year, now.month, now.day, now.hour, now.minute, now.second)
 
         if not paratitle:
             
             paratitle = now + '에 작성된 글입니다.'
         
         sql     = "INSERT INTO TS.clientpara \
-                    VALUES('%s', '%s', '%s', '%s')"% (paratitle, id, paragraph, now)
+                    VALUES('%s', '%s', '%s', '%s')"% (paratitle, userid, paragraph, now)
         self.db.execute(sql)
         self.db.commit()
 
         return 'commit'
 
 
-    def findSen(self, id):
-        sql     = "SELECT sentence FROM TS.clientsearch WHERE id = '%s'"% (id)
+    def findSen(self, userid):
+        sql     = "SELECT sentence FROM TS.clientsearch WHERE clientid = '%s'"% (userid)
         data = self.db.executeAll(sql)
         self.db.commit()
 
         return data
 
-    def findPara(self, id):
-        sql     = "SELECT paratitle, paratime FROM TS.clientpara WHERE id = '%s'"% (id)
+    def findPara(self, userid):
+        sql     = "SELECT paratitle, paratime FROM TS.clientpara WHERE clientid = '%s'"% (userid)
         data = self.db.executeAll(sql)
         self.db.commit()
 
         return data
 
-    def lookPara(self, id, paratime):
-        sql     = "SELECT paratitle, paragraph FROM TS.clientpara WHERE id = '%s' and paratime = '%s"% (id, paratime)
+    def lookPara(self, userid, paratime):
+        sql     = "SELECT paratitle, paragraph FROM TS.clientpara WHERE clientid = '%s' and paratime = '%s"% (userid, paratime)
         data = self.db.executeAll(sql)
         self.db.commit()
 
