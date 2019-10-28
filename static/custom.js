@@ -168,10 +168,17 @@ function logout(){
     }
 }
 
-function goPara(order){
+function speakPara(order){
     message = $.trim($('.order' + order).text());
 
-    console.log(message);
+    $.post("/speak", {
+        message: message,
+    }); // 말하기
+    
+}
+
+function goPara(order){
+    message = $.trim($('.order' + order).text());
 
     $.post("/insert", {
         message: message,

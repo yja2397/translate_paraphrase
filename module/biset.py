@@ -24,7 +24,7 @@ class biset(paraInterface):
                 words += " and meaning like "
                 words += "'%%" + synonym[i] + "%%'"
 
-        sql     = "select sentence from TS.sentence where meaning like " + words
+        sql     = "select sentence from TS.idiom where meaning like " + words
 
         data = self.db.executeAll(sql)
         self.db.commit()

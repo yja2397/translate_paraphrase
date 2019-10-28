@@ -11,6 +11,9 @@ from collections import Counter
 import pymysql
 from datetime import datetime
 import sys
+from gtts import gTTS
+from time import sleep
+import pyglet
 
 from module import db # db
 from module import user
@@ -63,7 +66,7 @@ def trans():
 
         response += """
             <div class="chat-bubble result">
-                <span class="chat-content order{1}">
+                <span class="chat-content order{1}" onclick='speakPara({1})' title="듣기">
                     {0}
                 </span>
                 <img class="insert" src="/static/insert.png" onclick='goPara({1})'/>
@@ -74,6 +77,21 @@ def trans():
 
     return jsonify(response_text)
 
+@app.route('/speak', methods=['POST'])
+def speak():
+    message = request.form['message']
+
+    tts = gTTS(text=message, lang='en')
+    filename = 'tmp/speak.mp3'
+    tts.save(filename)
+
+    music = pyglet.media.load(filename, streaming=False)
+    music.play()
+
+    sleep(music.duration) #prevent from killing
+    os.remove(filename) #remove temperory file
+
+    return 'speak'
 
 @app.route('/insert', methods=['POST'])
 def insert():
