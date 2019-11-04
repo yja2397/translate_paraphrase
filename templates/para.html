@@ -27,15 +27,27 @@
 </header>
 <article>
     <div class="board">
-        <div class="para">
-            <button class="modify" style="margin-right:48px;">삭제</a>
+        <div class="button">
+            <button class="modify" style="margin-right:20px;">삭제</a>
         </div>
-        <div class="choice">
-            <div>Essay</div>
-            <div>논문 발표</div>
-            <div>Eric 교수님께</div>
-            <div>2019.09.12 20:22 작성</div>
-        </div>
+        <table class="choice">
+            <th>
+                <td class="title para">제목</td>
+                <td class="title time">작성일자</td>
+            </th>
+        {% if not rows %}
+            <tr>
+                <td colspan="2">저장한 글이 없습니다.</td>
+            </tr>
+        {% else %}
+        {% for row in rows %}
+            <tr>
+                <td class="para">{{row['paratitle']}}</td>
+                <td class="time">{{row['paratime']}}</td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        </table>
     </div>
 </article>
 <nav>

@@ -223,18 +223,35 @@ a:hover{
     text-decoration: none;
 }
 
-.choice div{
+.choice{
+    width:80%;
+    margin:auto;
+}
+
+.choice td{
     margin:auto;
     margin-top:10px;
-    width:80%;
+    /* width:80%; */
     height:35px;
     border:1px solid #34314c7a;
     line-height: 35px;
     text-indent: 10px;
 }
 
-.choice div:hover{
+.choice .title:hover{
+    background-color: none;
+}
+
+.choice tr:hover{
     background-color: #34314c46;
+}
+
+.subj{
+    width:80%
+}
+
+.time{
+    width:20%
 }
 
 .modify{

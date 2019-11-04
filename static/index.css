@@ -283,14 +283,14 @@ a:hover{
 }
 
 footer{
-    margin:auto;
+    /* margin:auto;
     width:100%;
     text-align: center;
     height:50px;
     border: 0.2px solid #555;
     position: absolute;
     bottom: 0;
-    height: 2.5rem;
+    height: 2.5rem; */
 }
 
 ::-webkit-scrollbar{width: 16px;}

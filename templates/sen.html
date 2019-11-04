@@ -32,17 +32,21 @@
         </div>
         <table id="sentence">
             <tr class="searched">
-                <td class="title">검색한 문장</td>
-                <td class="title">번역된 문장</td>
+                <td class="title sen">검색한 문장</td>
+                <td class="title cnt">검색횟수</td>
             </tr>
-            <!-- <tr class="searched">
-                <td class="english">Wrote at 2019.09.12 20:22</td>
-                <td class="translate">2019.09.12 20:22 작성</td>
-            </tr>
+        {% if not rows %}
             <tr class="searched">
-                <td class="english">Wrote at 2019.09.12 20:22</td>
-                <td class="translate">2019.09.12 20:22 작성</td>
-            </tr> -->
+                <td colspan="2">검색한 문장이 없습니다.</td>
+            </tr>
+        {% else %}
+        {% for row in rows %}
+            <tr class="searched">
+                <td class="sen">{{row['sentence']}}</td>
+                <td class="cnt">{{row['searchCnt']}}</td>
+            </tr>
+        {% endfor %}
+        {% endif %}
         </table>
     </div>
 </article>

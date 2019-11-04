@@ -76,7 +76,7 @@ class memberManage():
 
 
     def findSen(self, userid):
-        sql     = "SELECT sentence FROM TS.clientsearch WHERE clientid = '%s'"% (userid)
+        sql     = "SELECT sentence, searchCnt FROM TS.clientsearch WHERE clientid = '%s'"% (userid)
         data = self.db.executeAll(sql)
         self.db.commit()
 
@@ -95,3 +95,11 @@ class memberManage():
         self.db.commit()
 
         return data
+
+if __name__ == "__main__":
+    user = memberManage()
+    data = user.findSen("admin")
+
+    for i in data:
+        print(i['sentence'])
+        print(i['searchCnt'])

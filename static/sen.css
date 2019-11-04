@@ -175,12 +175,9 @@ a:hover{
 
 #sentence{
     margin:auto;
+    width:80%;
 }
 
-.searched{
-    width:80%;
-    margin:auto;
-}
 
 .searched:hover .translate{
     background-color: #34314c46;
@@ -190,32 +187,34 @@ a:hover{
     background-color: #34314c46;
 }
 
-.title{
-    /* margin:auto; */
-    margin-right:0;
-    margin-top:10px;
-    height:35px;
+.searched td{
+    /* width:100%; */
+    margin:auto;
     border:1px solid #34314c7a;
     line-height: 35px;
     text-indent: 10px;
-    width:50%;
+}
+
+.title{
+    /* margin:auto; */
+    margin-right:0;
+    /* margin-top:10px; */
+    height:35px;
+    
     text-align: center;
     float:left;
 }
 
-.english{
+.sen{
     /* margin:auto; */
     margin-right:0;
     margin-top:10px;
     /* height:35px; */
-    border:1px solid #34314c7a;
-    line-height: 35px;
-    text-indent: 10px;
-    width:50%;
+    width:85%;
     float:left;
 }
 
-.translate{
+.cnt{
     /* float:left; */
     /* margin:auto; */
     margin-top:10px;
@@ -224,7 +223,7 @@ a:hover{
     line-height: 35px;
     text-indent: 10px;
     /* min-width:40%; */
-    width:50%;
+    width:15%;
     float: left;
 }
 

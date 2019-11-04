@@ -34,11 +34,15 @@ def index2():
 
 @app.route('/para.html', methods=['GET', 'POST'])
 def para():
-    return render_template('para.html')
+    mM = user.memberManage()
+    rows = mM.findPara(session['userid'])
+    return render_template('para.html', rows=rows)
 
 @app.route('/sen.html', methods=['GET', 'POST'])
 def sen():
-  return render_template('sen.html')
+    mM = user.memberManage()
+    rows = mM.findSen(session['userid'])
+    return render_template('sen.html', rows=rows)
 
 @app.route('/login.html', methods=['GET', 'POST'])
 def log():
