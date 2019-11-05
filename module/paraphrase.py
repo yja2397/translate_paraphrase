@@ -3,6 +3,7 @@ import json
 from module import wordnetSimilarity
 from module import toknize
 from module import biset
+from module import article_spinner
 
 class paraphrase():
     def isEnglishOrKorean(self, input_s):
@@ -50,21 +51,28 @@ class paraphrase():
 
     def bisets(self, message):
         bs = biset.biset()
-
         return bs.bisetData(message)
+
+    def trigram(self, message):
+        tri = article_spinner.trigram()
+        return tri.test_spinner(message)
     
     def manyResult(self, message):
-        message = self.papago(message)
-        mB = self.bisets(message)
-        mR = self.wordnet(message)
-        mS = self.tokin(message)
+        if self.isEnglishOrKorean(message) == "k": # 한국어일 때
+            message = self.papago(message) # 번역
+        mB = self.bisets(message) # DB에서 추출한 비슷한 문장들
+        mT = [self.trigram(message)] # trigram 사용한 비슷한 문장들
+        mR = self.wordnet(message) # wordnet에서 추출한 비슷한 문장들
+        mS = self.tokin(message) # 동의어를 이용한 비슷한 문장들
         
-        result = mB + mR + mS
-        # result = list(set(result))
+        result = [message] # 번역된 것
+        result += mB + mT + mR + mS
+        result = list(set(result))
         return result
 
 
 # run Flask app
 if __name__ == "__main__":
     translate = paraphrase()
-    translate.manyResult("Every man has a knack for rolling.")
+    result = translate.manyResult("Every man has a knack for rolling.")
+    print(result)

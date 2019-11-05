@@ -69,6 +69,7 @@ class memberManage():
         
         sql     = "INSERT INTO TS.clientpara \
                     VALUES('%s', '%s', '%s', '%s')"% (paratitle, userid, paragraph, now)
+
         self.db.execute(sql)
         self.db.commit()
 

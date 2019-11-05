@@ -17,26 +17,28 @@ class biset(paraInterface):
     def bisetData(self, sentence):
         synonym = self.synonymIfExists(sentence)
         length = len(synonym)
+        if length > 0:
+            words = "'%%" + synonym[0] + "%%'"
+            if length > 1:
+                for i in range(1,length):
+                    words += " and meaning like "
+                    words += "'%%" + synonym[i] + "%%'"
 
-        words = "'%%" + synonym[0] + "%%'"
-        if length > 1:
-            for i in range(1,length):
-                words += " and meaning like "
-                words += "'%%" + synonym[i] + "%%'"
+            sql     = "select sentence from TS.idiom where meaning like " + words
 
-        sql     = "select sentence from TS.idiom where meaning like " + words
+            data = self.db.executeAll(sql)
+            self.db.commit()
 
-        data = self.db.executeAll(sql)
-        self.db.commit()
+            if data:
+                words = []
+                for i in data:
+                    words.append(i['sentence'].replace('\xa0', ' '))
 
-        if data:
-            words = []
-            for i in data:
-                words.append(i['sentence'].replace('\xa0', ' '))
-
-            return words
+                return words
+            else:
+                return []
         else:
-            return []
+            resturn []
 
 # run Flask app
 if __name__ == "__main__":

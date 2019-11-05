@@ -177,6 +177,33 @@ function speakPara(order){
     
 }
 
+function load(order){
+    time = $.trim($('.order' + order).text());
+
+    $.post("/load", {
+        message : message,
+    }) // 글 불러오기
+
+    var para = $('.paragraph')
+    if ($("#write span").length){
+        $("#write span").remove();
+        $("#write").append(`
+            <textarea id="writeInput" cols="40" rows="8" >
+                ${message}
+            </textarea>
+        `)
+    }else{
+        $("#writeInput").remove();
+
+        $("#write").append(`
+            <textarea id="writeInput" cols="40" rows="8" >
+                ${message}
+            </textarea>
+        `)
+
+    }
+}
+
 function goPara(order){
     message = $.trim($('.order' + order).text());
 

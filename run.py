@@ -81,6 +81,16 @@ def trans():
 
     return jsonify(response_text)
 
+@app.route('/load', methods=['POST'])
+def load():
+    time = request.form['time']
+    userid = session['userid']
+
+    uM = user.memberManage()
+    paragraph = uM.lookPara(userid, time)
+
+    return paragraph
+
 @app.route('/speak', methods=['POST'])
 def speak():
     message = request.form['message']

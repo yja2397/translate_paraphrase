@@ -178,15 +178,6 @@ a:hover{
     width:80%;
 }
 
-
-.searched:hover .translate{
-    background-color: #34314c46;
-}
-
-.searched:hover .english{
-    background-color: #34314c46;
-}
-
 .searched td{
     /* width:100%; */
     margin:auto;
@@ -203,6 +194,11 @@ a:hover{
     
     text-align: center;
     float:left;
+}
+
+.sen:hover:not(.title){
+    cursor:pointer;
+    color: #47b8e0;
 }
 
 .sen{

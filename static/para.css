@@ -242,16 +242,17 @@ a:hover{
     background-color: none;
 }
 
-.choice tr:hover{
-    background-color: #34314c46;
+.subj:hover:not(.title){
+    cursor:pointer;
+    color: #47b8e0;
 }
 
 .subj{
-    width:80%
+    width:70%
 }
 
 .time{
-    width:20%
+    width:30%
 }
 
 .modify{
