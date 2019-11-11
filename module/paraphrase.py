@@ -53,20 +53,25 @@ class paraphrase():
         bs = biset.biset()
         return bs.bisetData(message)
 
-    def trigram(self, message):
+    def COCA(self, message):
         tri = article_spinner.trigram()
-        return tri.test_spinner(message)
+        return tri.list_COCA(message)
+
+    def twitter(self, message):
+        tri = article_spinner.trigram()
+        return tri.list_twitter(message)
     
     def manyResult(self, message):
         if self.isEnglishOrKorean(message) == "k": # 한국어일 때
             message = self.papago(message) # 번역
         mB = self.bisets(message) # DB에서 추출한 비슷한 문장들
-        mT = [self.trigram(message)] # trigram 사용한 비슷한 문장들
         mR = self.wordnet(message) # wordnet에서 추출한 비슷한 문장들
+        mC = self.COCA(message) # COCA 사용한 비슷한 문장들
+        mT = self.twitter(message) # twitter 사용한 비슷한 문장들
         mS = self.tokin(message) # 동의어를 이용한 비슷한 문장들
         
         result = [message] # 번역된 것
-        result += mB + mT + mR + mS
+        result += mB + mR + mC + mT + mS
         result = list(set(result))
         return result
 

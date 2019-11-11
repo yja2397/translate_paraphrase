@@ -9,9 +9,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/sen.css">
+    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/jquery.tablesorter.min.js"></script>
+	<link rel="stylesheet" href="../static/blue_style.css" type="text/css">
+	<link rel="stylesheet" href="../static/green_style.css" type="text/css">
     <link href="{{ url_for('static', filename='searcher.ico') }}" rel="shortcut icon" type="image/x-icon">
     <title>Translate Searcher</title>
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){ 
+		$("#sentence").tablesorter();
+	});
+</script>
 <body>
 <header>
     <span id="title">
@@ -30,30 +40,33 @@
         <div class="para">
             <button class="modify" style="margin-right:48px;">삭제</a>
         </div>
-        <table id="sentence">
-            <tr class="searched">
-                <td class="title sen">검색한 문장</td>
-                <td class="title cnt">검색횟수</td>
-            </tr>
-        {% if not rows %}
-            <tr class="searched">
-                <td colspan="2">검색한 문장이 없습니다.</td>
-            </tr>
-        {% else %}
-        {% for row in rows %}
-            <tr class="searched">
-                <td class="sen order" onclick="speakPara()">{{row['sentence']}}</td>
-                <td class="cnt">{{row['searchCnt']}}</td>
-            </tr>
-        {% endfor %}
-        {% endif %}
+        <table id="sentence" class="tablesorter">
+            <thead>
+                <tr class="searched">
+                    <th class="title sen">검색한 문장</th>
+                    <th class="title cnt">검색횟수</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if not rows %}
+                <tr class="searched">
+                    <td colspan="2">검색한 문장이 없습니다.</td>
+                </tr>
+            {% else %}
+            {% for row in rows %}
+                <tr class="searched">
+                    <td class="sen order" onclick="speakPara()">{{row['sentence']}}</td>
+                    <td class="cnt">{{row['searchCnt']}}</td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
         </table>
     </div>
 </article>
 <footer>
 
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="../static/custom.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

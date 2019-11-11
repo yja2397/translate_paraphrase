@@ -38,7 +38,7 @@ class biset(paraInterface):
             else:
                 return []
         else:
-            resturn []
+            return []
 
 # run Flask app
 if __name__ == "__main__":

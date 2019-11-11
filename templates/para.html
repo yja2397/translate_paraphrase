@@ -9,9 +9,18 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/para.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/jquery.tablesorter.min.js"></script>
+	<link rel="stylesheet" href="../static/blue_style.css" type="text/css">
+	<link rel="stylesheet" href="../static/green_style.css" type="text/css">
     <link href="{{ url_for('static', filename='searcher.ico') }}" rel="shortcut icon" type="image/x-icon">
     <title>Translate Searcher</title>
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){ 
+		$("#choice").tablesorter();
+	});
+</script>
 <body>
 <header>
     <span id="title">
@@ -30,23 +39,27 @@
         <div class="para">
             <button class="modify" style="margin-right:20px;">삭제</a>
         </div>
-        <table class="choice">
+        <table id="choice" class="tablesorter">
+            <thead>
             <tr>
-                <td class="title subj">제목</td>
-                <td class="title time">작성일자</td>
+                <th class="title subj">제목</th>
+                <th class="title time">작성일자</th>
             </tr>
-        {% if not rows %}
-            <tr>
-                <td colspan="2">저장한 글이 없습니다.</td>
-            </tr>
-        {% else %}
-        {% for row in rows %}
-            <tr>
-                <td class="subj" onclick="load()">{{row['paratitle']}}</td>
-                <td class="time order">{{row['paratime']}}</td>
-            </tr>
-        {% endfor %}
-        {% endif %}
+            </thead>
+            <tbody>
+            {% if not rows %}
+                <tr>
+                    <td colspan="2">저장한 글이 없습니다.</td>
+                </tr>
+            {% else %}
+            {% for row in rows %}
+                <tr>
+                    <td class="subj" onclick="load()">{{row['paratitle']}}</td>
+                    <td class="time order">{{row['paratime']}}</td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
         </table>
     </div>
 </article>
@@ -76,7 +89,7 @@
 <footer>
 
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="../static/custom.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

@@ -48,7 +48,7 @@ class paraInterface:
             returnStr = " "
             for w in range(allWordsCount):
                 # ading = vList[w][randint(0,len(vList[w])-1)] #.replace("_"," ")
-                str.append(vList[w][randint(0,len(vList[w])-1)].replace("_"," "))
+                str.append(vList[w][randint(0,len(vList[w])-1)].replace("_"," ").replace(" .", ".").replace(" '", "'").replace(" ,", ",").replace("$ ", "$").replace(" !", "!").replace(" ?", "?"))
                 ppList.append(returnStr.join(str))
         ppList = list(set(ppList))
         return ppList
