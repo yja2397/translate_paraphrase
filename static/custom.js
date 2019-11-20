@@ -24,7 +24,7 @@ function translate(message) {
 			`);
         }
         // remove the loading indicator
-        $( "#loading" ).remove();
+        $( "#myProgress" ).remove();
 	}
 }
 
@@ -105,13 +105,13 @@ $('#target').on('submit', function(e){
 	`);
     // loading
     $conversation_view.append(`
-        <div class="chat-bubble" id="loading">
-            <span class="chat-content">
-                <b class="loading">Loading sentences</b>
-            </span>
+        <div id="myProgress" onload="move()">
+            <div id="myBar"></div>
         </div>
-	`);
+    `);
 
+    $(document).ready(function(){ move() });
+    
         // clear the text input 
     $input_message.val('');
 
@@ -123,6 +123,25 @@ $('#target').on('submit', function(e){
     // send the message
     translate(input_message);
 });
+
+var i = 0;
+function move() {
+  if (i == 0) {
+    i = 1;
+    var elem = $("#myBar");
+    var width = 1;
+    var id = setInterval(frame, 500);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        elem.width(width + "%");
+      }
+    }
+  }
+}
 
 function copy(){
     if ($("#writeInput").length){

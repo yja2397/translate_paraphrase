@@ -12,7 +12,7 @@ class paraInterface:
 
     # Determine the POS to paraphrase
     def paraphraseable(self, tag):
-        return tag.startswith('NN') or tag =='VB' or tag.startswith('JJ')
+        return tag.startswith('NN') or tag =='VB' or tag.startswith('JJ') or tag.startswith('AD')
 
     # POS tagging
     def pos(self, tag):
@@ -48,7 +48,7 @@ class paraInterface:
             returnStr = " "
             for w in range(allWordsCount):
                 # ading = vList[w][randint(0,len(vList[w])-1)] #.replace("_"," ")
-                str.append(vList[w][randint(0,len(vList[w])-1)].replace("_"," ").replace(" .", ".").replace(" '", "'").replace(" ,", ",").replace("$ ", "$").replace(" !", "!").replace(" ?", "?"))
-                ppList.append(returnStr.join(str))
+                str.append(vList[w][randint(0,len(vList[w])-1)])
+            ppList.append(returnStr.join(str))
         ppList = list(set(ppList))
-        return ppList
+        return ppList[:5]

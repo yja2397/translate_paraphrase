@@ -17,8 +17,6 @@ from module import paraphrase
 
 # textinput = TextInput(text='Hello world', focus=True)
 
-
-
 class MyApp(App):
 
     def build(self):
@@ -26,17 +24,47 @@ class MyApp(App):
         self.text.bind(on_text_validate=self.on_enter)
         self.text.text_language = "kor"
 
-        layout=BoxLayout()
-        layout.orientation = 'horizontal'
-        layout.add_widget(self.text)
+        self.layout=BoxLayout()
+        self.layout.orientation = 'horizontal'
+        self.layout.add_widget(self.text)
 
-        return layout
+        return self.layout
 
     def on_enter(self, instance):
         print('User pressed enter in', self.text.text)
 
+        self.trans(self.text.text)
+
         return 
 
+
+    def trans(self, message):
+        tr = paraphrase.paraphrase()
+        trans = tr.manyResult(message) # paraphrase
+
+        if len(trans) > 20:
+            transL = 20
+        else:
+            transL = len(trans)
+        
+        # response = ""
+
+        print(trans)
+
+        # for i in range(0,transL):
+
+        #     response += """
+        #         <div class="chat-bubble result">
+        #             <span class="chat-content order{1}" onclick='speakPara({1})' title="듣기">
+        #                 {0}
+        #             </span>
+        #             <img class="insert" src="/static/insert.png" onclick='goPara({1})'/>
+        #         </div>
+        #     """.format(trans[i], i)
+
+        # response_text = {"message":  message, "result": response}
+
+        return # jsonify(response_text)
 
 
     # def on_focus(self, instance, value):

@@ -59,8 +59,8 @@ def trans():
     tr = paraphrase.paraphrase()
     trans = tr.manyResult(message) # paraphrase
 
-    if len(trans) > 7:
-        transL = 7
+    if len(trans) > 20:
+        transL = 20
     else:
         transL = len(trans)
     
@@ -197,4 +197,5 @@ def save():
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
+    app.run(host='0.0.0.0')
     app.run()

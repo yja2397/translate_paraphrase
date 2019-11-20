@@ -293,6 +293,17 @@ footer{
     height: 2.5rem; */
 }
 
+#myProgress {
+    width: 500px;
+    background-color: grey;
+}
+  
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+}
+
 ::-webkit-scrollbar{width: 16px;}
 ::-webkit-scrollbar-track {background-color:#f1f1f1;}
 ::-webkit-scrollbar-thumb {background-color:#ff7473;}

@@ -1,9 +1,11 @@
 import urllib.request
 import json
+import time
 from module import wordnetSimilarity
 from module import toknize
 from module import biset
 from module import article_spinner
+from module import MWU
 
 class paraphrase():
     def isEnglishOrKorean(self, input_s):
@@ -61,19 +63,62 @@ class paraphrase():
         tri = article_spinner.trigram()
         return tri.list_twitter(message)
     
-    def manyResult(self, message):
+    def MWU(self, message):
+        mwu = MWU.MWU()
+        return mwu.useMWU(message)
+
+    def makeResult(self, message):
+        start = time.time()
         if self.isEnglishOrKorean(message) == "k": # 한국어일 때
             message = self.papago(message) # 번역
-        mB = self.bisets(message) # DB에서 추출한 비슷한 문장들
+        print("translate : " + str(time.time() - start))
+        start = time.time()
+        mM = self.MWU(message) # MWU에서 추출한 비슷한 문장
+        print("MWU : " + str(time.time() - start))
+        start = time.time()
         mR = self.wordnet(message) # wordnet에서 추출한 비슷한 문장들
+        print("wordnet : " + str(time.time() - start))
+        start = time.time()
         mC = self.COCA(message) # COCA 사용한 비슷한 문장들
+        print("COCA : " + str(time.time() - start))
+        start = time.time()
         mT = self.twitter(message) # twitter 사용한 비슷한 문장들
-        mS = self.tokin(message) # 동의어를 이용한 비슷한 문장들
+        print("TWITTER : " + str(time.time() - start))
+        start = time.time()
+        mB = self.bisets(message) # DB에서 추출한 비슷한 문장들
+        print("DB : " + str(time.time() - start))
+        start = time.time()
+        # mS = self.tokin(message) # 동의어를 이용한 비슷한 문장들
         
         result = [message] # 번역된 것
-        result += mB + mR + mC + mT + mS
-        result = list(set(result))
+        result += mM + mR + mC + mT + mB # + mS
+
         return result
+
+    def processResult(self, message):
+        result = self.makeResult(message)
+
+        if len(result) > 1:
+            delete = []
+            for i in range(1,len(result)):
+                if result[i].count(' ') < message.count(' ') - 2: # 너무 단어 개수가 짧은 문장 제외
+                    delete.append(i)
+                elif message[:-1].lower() in result[i].lower(): # 중복제거
+                    delete.append(i)
+            
+            delete.reverse()
+            for i in delete:
+                del result[i]
+
+        finalResult = []
+        for final in result:
+            finalResult.append(final.replace("_"," ").replace(" .", ".").replace(" '", "'").replace(" ,", ",").replace("$ ", "$").replace(" !", "!").replace(" ?", "?").replace(" i ", " I ").replace(" i'", " I'").replace(" n't", "n't"))
+
+        return finalResult
+    
+    def manyResult(self, message):
+        
+        return self.processResult(message)
 
 
 # run Flask app
