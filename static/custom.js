@@ -65,10 +65,14 @@ $('#login').on('submit', function(e){
 $('#join').on('submit', function(e){
     e.preventDefault();
 
-    $.post("/join", {
-        userid: $('#userid').val(),
-        pswd: $('#pswd').val(),
-    }, handle_response);
+    /* 회원가입 자바스크립트 */
+    if(invalidItem()){
+
+        $.post("/join", {
+            userid: $('#userid').val(),
+            pswd: $('#pswd').val(),
+        }, handle_response);
+    }
 
     function handle_response(data) {
         if(`${data.connect}` == "0"){
@@ -81,6 +85,25 @@ $('#join').on('submit', function(e){
     }
 
 });
+
+    //유효성 체크할 함수
+function invalidItem() {
+    // 아이디 체크
+    if($("input[name=userid]").val() == '') {
+        alert("아이디를 입력하세요.");
+        $("input[name=userid]").focus();
+
+        return false;
+    }
+
+    // 비밀번호 체크
+    if($("input[name=pswd]").val() == ''){
+        alert("비밀번호를 입력하세요");
+        $("input[name=pswd]").focus();
+
+        return false;
+    }
+}
 
 
 $('#target').on('submit', function(e){
@@ -105,13 +128,16 @@ $('#target').on('submit', function(e){
 	`);
     // loading
     $conversation_view.append(`
-        <div id="myProgress" onload="move()">
-            <div id="myBar"></div>
+        <div id="myProgress">
+            <div id="myBar">
+            </div>
         </div>
+        <script>
+            $(document).ready(function(){ move(); });
+        </script>
     `);
 
-    $(document).ready(function(){ move() });
-    
+
         // clear the text input 
     $input_message.val('');
 
@@ -124,23 +150,27 @@ $('#target').on('submit', function(e){
     translate(input_message);
 });
 
-var i = 0;
 function move() {
-  if (i == 0) {
-    i = 1;
-    var elem = $("#myBar");
-    var width = 1;
-    var id = setInterval(frame, 500);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        i = 0;
-      } else {
-        width++;
-        elem.width(width + "%");
-      }
+    var i = 0;
+    if (i == 0) {
+        i = 1;
+        var elem = $("#myBar");
+        var width = 1;
+        var id = setInterval(frame, 300);
+        function frame() {
+            if (width >= 99) {
+                clearInterval(id);
+                i = 0;
+            } else {
+                width++;
+                if (width < 50 && width % 4 == 0){
+                    elem.width(width + "%");
+                }else if(width > 50 && width % 2 == 0){
+                    elem.width(width + "%");
+                }
+            }
+        }
     }
-  }
 }
 
 function copy(){

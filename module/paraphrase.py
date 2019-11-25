@@ -98,23 +98,25 @@ class paraphrase():
     def processResult(self, message):
         result = self.makeResult(message)
 
+        finalResult = []
+        for final in result:
+            finalResult.append(final.replace("_"," ").replace(" .", ".").replace(" '", "'").replace(" ,", ",").replace("$ ", "$").replace(" !", "!").replace(" ?", "?").replace(" i ", " I ").replace(" i'", " I'").replace(" n't", "n't"))
+
+        result = finalResult
+
         if len(result) > 1:
             delete = []
             for i in range(1,len(result)):
-                if result[i].count(' ') < message.count(' ') - 2: # 너무 단어 개수가 짧은 문장 제외
+                if result[i].count(' ') < message.count(' ') - 3: # 너무 단어 개수가 짧은 문장 제외
                     delete.append(i)
-                elif message[:-1].lower() in result[i].lower(): # 중복제거
+                elif result[0][:-3].lower().strip() in result[i].lower().strip(): # 중복제거
                     delete.append(i)
             
             delete.reverse()
             for i in delete:
                 del result[i]
 
-        finalResult = []
-        for final in result:
-            finalResult.append(final.replace("_"," ").replace(" .", ".").replace(" '", "'").replace(" ,", ",").replace("$ ", "$").replace(" !", "!").replace(" ?", "?").replace(" i ", " I ").replace(" i'", " I'").replace(" n't", "n't"))
-
-        return finalResult
+        return result
     
     def manyResult(self, message):
         
@@ -124,5 +126,5 @@ class paraphrase():
 # run Flask app
 if __name__ == "__main__":
     translate = paraphrase()
-    result = translate.manyResult("Every man has a knack for rolling.")
+    result = translate.manyResult("Android studios are too hard to learn.")
     print(result)

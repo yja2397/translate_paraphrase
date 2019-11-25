@@ -1,0 +1,32 @@
+#:kivy 1.11.1
+
+<Layout>:
+    mainLayout:
+        BoxLayout:
+            size_hint_y : None
+            add_widget : anchor1
+
+    searchText:
+        TextInput:
+            id : text
+            text_language : "kor"
+            hint_text: 'Input sentence what you want to paraphrase.'
+            size_hint : 0.95, 0.5
+            on_text : on_enter
+
+    anchor1:
+        AnchorLayout:
+            anchor_x:'center'
+            anchor_y:'top'
+            orientation: 'vertical'
+    
+    anchor2:
+        AnchorLayout:
+            anchor_x:'left'
+            anchor_x:'bottom'
+            add_widget: result
+    
+    result:
+        BoxLayout:
+            orientation:'vertical'
+            height:400

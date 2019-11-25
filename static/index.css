@@ -294,14 +294,16 @@ footer{
 }
 
 #myProgress {
-    width: 500px;
-    background-color: grey;
+    margin-top:40px;
+    width: 300px;
+    border: 2px solid #47b8e0;
 }
   
 #myBar {
     width: 1%;
     height: 30px;
-    background-color: green;
+    background-color: #47b8e0;
+
 }
 
 ::-webkit-scrollbar{width: 16px;}

@@ -24,13 +24,13 @@
         {% block body %}
         {% if session['logged_in'] %}
         <ul class="menu">
-            <a href="#!" onclick="logout()"><li><i class="fa fa-user-o" aria-hidden="true"></i></li></a>
-            <a href="para.html"><li><i class="fa fa-file-text-o" aria-hidden="true"></i></li></a>
-            <a href="sen.html"><li><i class="fa fa-file-word-o" aria-hidden="true"></i></li></a>
+            <a href="#!" onclick="logout()" title="로그아웃"><li><i class="fa fa-user-o" aria-hidden="true"></i></li></a>
+            <a href="para.html" title="작성글 보기"><li><i class="fa fa-file-text-o" aria-hidden="true"></i></li></a>
+            <a href="sen.html" title="찜한 문장 보기"><li><i class="fa fa-file-word-o" aria-hidden="true"></i></li></a>
         </ul>
         {% else %}
         <ul class="menu">
-            <a href="login.html"><li><i class="fa fa-user-o" aria-hidden="true"></i></li></a>
+            <a href="login.html" title="로그인"><li><i class="fa fa-user-o" aria-hidden="true"></i></li></a>
         </ul>
         {% endif %}
         {% endblock %}
@@ -66,8 +66,8 @@
             <!-- <textarea id="viewInput" cols="40" rows="8" >Hello World</textarea> -->
         </div>
         <div class="para">
-            <button class="save" onclick="save()">SAVE</button>
-            <button class="copy" onclick="copy()">COPY</button>
+            <button class="save" onclick="save()" title="저장">SAVE</button>
+            <button class="copy" onclick="copy()" title="복사">COPY</button>
         </div>
     </div>
 </nav>
