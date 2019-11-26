@@ -7,6 +7,7 @@ from module import biset
 from module import article_spinner
 from module import MWU
 
+
 class paraphrase():
     def isEnglishOrKorean(self, input_s):
         k_count = 0
@@ -119,9 +120,8 @@ class paraphrase():
         return result
     
     def manyResult(self, message):
-        
-        return self.processResult(message)
 
+        return self.processResult(message)
 
 # run Flask app
 if __name__ == "__main__":
