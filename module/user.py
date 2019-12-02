@@ -91,7 +91,7 @@ class memberManage():
         return data
 
     def lookPara(self, userid, paratime):
-        sql     = "SELECT paratitle, paragraph FROM TS.clientpara WHERE clientid = '%s' and paratime = '%s"% (userid, paratime)
+        sql     = "SELECT paratitle, paragraph FROM TS.clientpara WHERE clientid = '%s' and paratime = '%s'"% (userid, paratime)
         data = self.db.executeAll(sql)
         self.db.commit()
 

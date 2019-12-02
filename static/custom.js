@@ -195,8 +195,11 @@ function save(){
     if ($("#writeInput").length){
         text = $.trim($("#writeInput").text());
 
+        title = prompt("글 제목");
+
         $.post("/save", {
             text: text,
+            title: title,
         }); // db 삽입
     
         function handle_response(data) {
@@ -226,30 +229,34 @@ function speakPara(order){
     
 }
 
-function load(order){
-    time = $.trim($('.order' + order).text());
+$(".subj").click(function() {
+    time = $.trim($('.order' + $(this).index()-1).text());
+    alert($(this).index());
 
     $.post("/load", {
-        message : message,
-    }) // 글 불러오기
+        time : time,
+    }, handle_response); // 글 불러오기
 
-    var para = $('.paragraph')
-    if ($("#write span").length){
-        $("#write span").remove();
-        $("#write").append(`
-            <textarea id="writeInput" cols="40" rows="8" >
-                ${message}
-            </textarea>
-        `)
-    }else{
-        $("#writeInput").remove();
+    function handle_response(data) {
 
-        $("#write").append(`
-            <textarea id="writeInput" cols="40" rows="8" >
-                ${message}
-            </textarea>
-        `)
+        var para = $('.paragraph')
+        if ($("#write span").length){
+            $("#write span").remove();
+            $("#write").append(`
+                <textarea id="writeInput" cols="40" rows="8" >
+                    ${data.message}
+                </textarea>
+            `)
+        }else{
+            $("#writeInput").remove();
 
+            $("#write").append(`
+                <textarea id="writeInput" cols="40" rows="8" >
+                    ${data.message}
+                </textarea>
+            `)
+
+        }
     }
 }
 

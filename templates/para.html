@@ -18,8 +18,8 @@
 </head>
 <script type="text/javascript">
 	$(document).ready(function(){ 
-		$("#choice").tablesorter();
-	});
+        $("#choice").tablesorter();
+    });
 </script>
 <body>
 <header>
@@ -47,18 +47,23 @@
             </tr>
             </thead>
             <tbody>
-            {% if not rows %}
-                <tr>
-                    <td colspan="2">저장한 글이 없습니다.</td>
-                </tr>
-            {% else %}
-            {% for row in rows %}
-                <tr>
-                    <td class="subj" onclick="load()">{{row['paratitle']}}</td>
-                    <td class="time order">{{row['paratime']}}</td>
-                </tr>
-            {% endfor %}
-            {% endif %}
+                <!-- <c:out value="{{data}}" escapeXml="false" /> -->
+                <!-- <c:out value='${data.replaceAll("\\\<.*?\\\>","")}' /> -->
+            <!-- {% block body %} -->
+                {% if not rows %}
+                        <tr>
+                            <td colspan="2">저장한 글이 없습니다.</td>
+                        </tr>
+                {% else %}
+                    {% for row in rows %}
+                            <tr>
+                                <td class="subj">{{row['paratitle']}}</td>
+                                <td class="time order{{loop.index}}">{{row['paratime']}}</td>
+                            </tr>
+                    {% endfor %}
+                {% endif %}
+            <!-- {% endblock %} -->
+            <!-- <a class="order{{data}}" /> -->
             </tbody>
         </table>
     </div>

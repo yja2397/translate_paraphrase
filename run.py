@@ -36,6 +36,27 @@ def index2():
 def para():
     mM = user.memberManage()
     rows = mM.findPara(session['userid'])
+
+    table = ""
+    
+    if not rows:
+        table += '''
+                <tr>
+                    <td colspan="2">저장한 글이 없습니다.</td>
+                </tr>
+        '''
+    else:
+        for i in range(0, len(rows)):
+
+            table += '''
+                    <tr>
+                        <td class="subj" onclick='load({0})'>{1}</td>
+                        <td class="time order{0}">{2}</td>
+                    </tr>
+            '''.format(i, rows[i]['paratitle'], rows[i]['paratime'])
+    
+    print(table)
+
     return render_template('para.html', rows=rows)
 
 @app.route('/sen.html', methods=['GET', 'POST'])
@@ -89,7 +110,12 @@ def load():
     uM = user.memberManage()
     paragraph = uM.lookPara(userid, time)
 
-    return paragraph
+    print("TIME : "+str(time))
+    print(paragraph[0]['paragraph'])
+
+    response_text = {"message": paragraph[0]['paragraph']}
+
+    return jsonify(response_text)
 
 @app.route('/speak', methods=['POST'])
 def speak():
@@ -182,16 +208,16 @@ def join():
 @app.route('/save', methods=['POST'])
 def save():
     text = request.form['text']
+    title = request.form['title']
 
     if 'logged_in' in session and session['logged_in']:
         mM = user.memberManage()
 
-        mM.insertPara(session['userid'], text)
+        mM.insertPara(session['userid'], text, title)
 
         return jsonify({"message": "저장되었습니다."})
     else:
         return jsonify({"message": "로그인한 사용자만 이용 가능합니다."})
-  
 
 # run Flask app
 if __name__ == "__main__":
