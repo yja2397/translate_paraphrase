@@ -37,18 +37,12 @@ setInterval(function() {
 $('#login').on('submit', function(e){
     e.preventDefault();
 
-    console.log("HO");
-
     $.post("/login", {
         userid: $('#userid').val(),
         pswd: $('#pswd').val(),
     }, handle_response);
 
-    console.log("NO?");
-
     function handle_response(data) {
-        console.log("ON?");
-
         if(`${data.connect}` == "0"){
             location.href="index.html";
         }else{
@@ -143,8 +137,6 @@ $('#target').on('submit', function(e){
 
     var div = document.getElementsByClassName("conversation-view")[0];
     div.scrollTop = div.scrollHeight;
-
-    console.log(input_message);
     
     // send the message
     translate(input_message);
@@ -183,9 +175,6 @@ function copy(){
         document.execCommand("copy");
     
         alert("복사되었습니다.");
-    
-        console.log(copyText.value);
-
     }else{
         alert("복사할 내용이 없습니다.")
     }
@@ -209,7 +198,6 @@ function save(){
     }else{
         alert("저장할 내용이 없습니다.")
     }
-
 
 }
 
@@ -292,18 +280,20 @@ function deleteSen(){
     if($(".checkbox").css("display") == "none"){
         $(".checkbox").show();
     }else{
-        var checkedSen = [];
+        var checkedSen = "";
 
         $("input[name=chk]:checked").each(function(i){
-            checkedSen.push($(this).val());
+            checkedSen += $(this).val();
+            checkedSen += ", "
         });
 
         $.post("/deleteSen", {
-            deleteSen = checkedSen,
+            deleteSen: checkedSen,
         });
         // 삭제 sentence들.
 
         $(".checkbox").hide();
+        location.reload();
     }
 }
 
@@ -311,17 +301,20 @@ function deletePara(){
     if($(".checkbox").css("display") == "none"){
         $(".checkbox").show();
     }else{
-        var checkedPara = [];
+        var checkedPara = "";
 
         $("input[name=chk]:checked").each(function(i){
-            checkedPara.push($(this).val());
+            checkedPara += $(this).val();
+            checkedPara += ", ";
         });
 
         $.post("/deletePara", {
-            deletePara = checkedPara,
+            deletePara: checkedPara,
         });
         // 삭제 글들.
+
         $(".checkbox").hide();
+        location.reload();
     }
 }
 

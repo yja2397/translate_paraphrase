@@ -58,7 +58,7 @@
                 {% else %}
                     {% for row in rows %}
                             <tr>
-                                <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['paratitle']}}" /></td>
+                                <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['paratime']}}" /></td>
                                 <td class="subj" onclick="load(this)">{{row['paratitle']}}</td>
                                 <td class="time order{{loop.index}}">{{row['paratime']}}</td>
                             </tr>

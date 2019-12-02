@@ -29,7 +29,7 @@ class memberManage():
                         VALUES('%s', '%s')"% (userid, pswd)
             self.db.execute(sql)
             self.db.commit()
-            
+
             return 0
 
     def insertSen(self, sentence, userid):
@@ -77,7 +77,7 @@ class memberManage():
         self.db.commit()
         
         sql     = "UPDATE TS.client \
-                    SET paraCnt = paraCnt + 1 \
+                    SET parCnt = parCnt + 1 \
                     WHERE id = '%s'"% (userid)
         self.db.execute(sql)
         self.db.commit()
@@ -110,12 +110,10 @@ class memberManage():
         if deleteSen:
             for sen in deleteSen:
                 sql = "DELETE FROM TS.clientsearch WHERE clientid = '%s' AND sentence = '%s'"% (userid, sen)
-                print(sql)
                 self.db.execute(sql)
                 self.db.commit()
         
-        return
-
+        return ""
     
     def deletePara(self, userid, deleteSen):
         if deleteSen:
@@ -124,7 +122,7 @@ class memberManage():
                 self.db.execute(sql)
                 self.db.commit()
         
-        return
+        return ""
 
 if __name__ == "__main__":
     user = memberManage()

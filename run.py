@@ -14,6 +14,7 @@ import sys
 from gtts import gTTS
 from time import sleep
 import pyglet
+from flask_gtts import gtts
 
 from module import db # db
 from module import user
@@ -23,6 +24,7 @@ h = httplib2.Http()
 okt = Okt()
 
 app = Flask(__name__)
+gtts(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -36,27 +38,6 @@ def index2():
 def para():
     mM = user.memberManage()
     rows = mM.findPara(session['userid'])
-
-    table = ""
-    
-    if not rows:
-        table += '''
-                <tr>
-                    <td colspan="2">저장한 글이 없습니다.</td>
-                </tr>
-        '''
-    else:
-        for i in range(0, len(rows)):
-
-            table += '''
-                    <tr>
-                        <td class="subj" onclick='load({0})'>{1}</td>
-                        <td class="time order{0}">{2}</td>
-                    </tr>
-            '''.format(i, rows[i]['paratitle'], rows[i]['paratime'])
-    
-    print(table)
-
     return render_template('para.html', rows=rows)
 
 @app.route('/sen.html', methods=['GET', 'POST'])
@@ -110,9 +91,6 @@ def load():
     uM = user.memberManage()
     paragraph = uM.lookPara(userid, time)
 
-    print("TIME : "+str(time))
-    print(paragraph[0]['paragraph'])
-
     response_text = {"message": paragraph[0]['paragraph']}
 
     return jsonify(response_text)
@@ -121,6 +99,7 @@ def load():
 def speak():
     message = request.form['message']
 
+    # gtts.say(lang='en-us', text=message)
     tts = gTTS(text=message, lang='en')
     filename = 'tmp/speak.mp3'
     tts.save(filename)
@@ -167,8 +146,6 @@ def insert():
 def login():
     userid = request.form['userid']
     pswd = request.form['pswd'] 
-
-    print("HODHOHOFHOSHOFHO")
 
     mM = user.memberManage()
     connect = mM.login(userid, pswd)
@@ -226,10 +203,12 @@ def deleteSen():
     deleteSen = request.form['deleteSen']
     userid = session['userid']
 
-    mM = user.memberManage()
-    mM.deleteSen(userid, deleteSen)
+    print(deleteSen)
 
-    return 
+    mM = user.memberManage()
+    mM.deleteSen(userid, deleteSen.split(",")[:-1])
+
+    return ""
 
 @app.route('/deletePara', methods=['POST'])
 def deletePara():
@@ -237,9 +216,9 @@ def deletePara():
     userid = session['userid']
 
     mM = user.memberManage()
-    mM.deletePara(userid, deletePara)
+    mM.deletePara(userid, deletePara.split(",")[:-1])
 
-    return 
+    return ""
 
 # run Flask app
 if __name__ == "__main__":
