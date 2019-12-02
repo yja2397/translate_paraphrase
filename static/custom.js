@@ -230,9 +230,8 @@ function speakPara(order){
 }
 
 $(".subj").click(function() {
-    time = $.trim($('.order' + $(this).index()-1).text());
-    alert($(this).index());
-
+    time = $.trim($('.order' + String($(".subj").index(this))).text());
+    
     $.post("/load", {
         time : time,
     }, handle_response); // 글 불러오기
@@ -258,7 +257,7 @@ $(".subj").click(function() {
 
         }
     }
-}
+});
 
 function goPara(order){
     message = $.trim($('.order' + order).text());
@@ -287,4 +286,52 @@ function goPara(order){
         `)
 
     }
+}
+
+function deleteSen(){
+    if($(".checkbox").css("display") == "none"){
+        $(".checkbox").show();
+    }else{
+        var checkedSen = [];
+
+        $("input[name=chk]:checked").each(function(i){
+            checkedSen.push($(this).val());
+        });
+
+        $.post("/deleteSen", {
+            deleteSen = checkedSen,
+        });
+        // 삭제 sentence들.
+
+        $(".checkbox").hide();
+    }
+}
+
+function deletePara(){
+    if($(".checkbox").css("display") == "none"){
+        $(".checkbox").show();
+    }else{
+        var checkedPara = [];
+
+        $("input[name=chk]:checked").each(function(i){
+            checkedPara.push($(this).val());
+        });
+
+        $.post("/deletePara", {
+            deletePara = checkedPara,
+        });
+        // 삭제 글들.
+        $(".checkbox").hide();
+    }
+}
+
+function gogogo(){
+
+	// 클릭한 체크박스의 table 에서 (바로위 부모요소를 대상)
+	// 이름이 chk 인것을 찾고
+	// 현재 요소의 체크 상태를 찾은 대상에 적용
+    if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다 
+        $("input[type=checkbox]").prop("checked",true); // 전체선택 체크박스가 해제된 경우 
+    } else { //해당화면에 모든 checkbox들의 체크를해제시킨다. 
+        $("input[type=checkbox]").prop("checked",false); }
 }

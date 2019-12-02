@@ -37,11 +37,12 @@
 <article>
     <div class="board">
         <div class="para">
-            <button class="modify" style="margin-right:20px;">삭제</a>
+            <button class="modify" style="margin-right:20px;" onclick="deletePara()">삭제</a>
         </div>
         <table id="choice" class="tablesorter">
             <thead>
             <tr>
+                <td class="checkbox" style="border:1px solid black; background-color: black;"><input id="allCheck" type="checkbox" name="chk" onclick="gogogo(this)" /></td>
                 <th class="title subj">제목</th>
                 <th class="title time">작성일자</th>
             </tr>
@@ -57,7 +58,8 @@
                 {% else %}
                     {% for row in rows %}
                             <tr>
-                                <td class="subj">{{row['paratitle']}}</td>
+                                <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['paratitle']}}" /></td>
+                                <td class="subj" onclick="load(this)">{{row['paratitle']}}</td>
                                 <td class="time order{{loop.index}}">{{row['paratime']}}</td>
                             </tr>
                     {% endfor %}

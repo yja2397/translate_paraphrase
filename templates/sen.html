@@ -38,13 +38,13 @@
 <article>
     <div class="board">
         <div class="para">
-            <button class="modify" style="margin-right:48px;">삭제</a>
+            <button class="modify" style="margin-right:48px;" onclick="deleteSen()">삭제</a>
         </div>
         <form>
         <table id="sentence" class="tablesorter">
             <thead>
                 <tr class="searched">
-                    <th class="checkbox"><input type="checkbox" onclick="gogogo(this)" /></th>
+                    <td class="checkbox" style="border:1px solid black; background-color: black;"><input id="allCheck" type="checkbox" onclick="gogogo(this)" /></td>
                     <th class="title sen">검색한 문장</th>
                     <th class="title cnt">검색횟수</th>
                 </tr>
@@ -57,7 +57,7 @@
             {% else %}
             {% for row in rows %}
                 <tr class="searched">
-                    <td class="checkbox"><input type="checkbox" name="chk" value="{{row['sentence']}}" /></td>
+                    <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['sentence']}}" /></td>
                     <td class="sen order" onclick="speakPara()">{{row['sentence']}}</td>
                     <td class="cnt">{{row['searchCnt']}}</td>
                 </tr>

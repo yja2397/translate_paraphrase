@@ -29,9 +29,7 @@ class memberManage():
                         VALUES('%s', '%s')"% (userid, pswd)
             self.db.execute(sql)
             self.db.commit()
-
-            print("JOIN US")
-
+            
             return 0
 
     def insertSen(self, sentence, userid):
@@ -44,13 +42,18 @@ class memberManage():
             sql     = "INSERT INTO TS.clientsearch(sentence, clientid) \
                         VALUES('%s', '%s')"% (sentence, userid)
 
-            print(sql)
             self.db.execute(sql)
             self.db.commit()
 
         sql     = "UPDATE TS.clientsearch \
                     SET searchCnt = searchCnt + 1 \
                     WHERE sentence='%s' and clientid = '%s'"% (sentence, userid)
+        self.db.execute(sql)
+        self.db.commit()
+
+        sql     = "UPDATE TS.client \
+                    SET searchCnt = searchCnt + 1 \
+                    WHERE id = '%s'"% (userid)
         self.db.execute(sql)
         self.db.commit()
 
@@ -70,6 +73,12 @@ class memberManage():
         sql     = "INSERT INTO TS.clientpara \
                     VALUES('%s', '%s', '%s', '%s')"% (paratitle, userid, paragraph, now)
 
+        self.db.execute(sql)
+        self.db.commit()
+        
+        sql     = "UPDATE TS.client \
+                    SET paraCnt = paraCnt + 1 \
+                    WHERE id = '%s'"% (userid)
         self.db.execute(sql)
         self.db.commit()
 
@@ -96,6 +105,26 @@ class memberManage():
         self.db.commit()
 
         return data
+
+    def deleteSen(self, userid, deleteSen):
+        if deleteSen:
+            for sen in deleteSen:
+                sql = "DELETE FROM TS.clientsearch WHERE clientid = '%s' AND sentence = '%s'"% (userid, sen)
+                print(sql)
+                self.db.execute(sql)
+                self.db.commit()
+        
+        return
+
+    
+    def deletePara(self, userid, deleteSen):
+        if deleteSen:
+            for sen in deleteSen:
+                sql = "DELETE FROM TS.clientpara WHERE clientid = '%s' AND paratime = '%s'"% (userid, sen)
+                self.db.execute(sql)
+                self.db.commit()
+        
+        return
 
 if __name__ == "__main__":
     user = memberManage()

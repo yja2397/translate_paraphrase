@@ -168,6 +168,8 @@ def login():
     userid = request.form['userid']
     pswd = request.form['pswd'] 
 
+    print("HODHOHOFHOSHOFHO")
+
     mM = user.memberManage()
     connect = mM.login(userid, pswd)
 
@@ -218,6 +220,26 @@ def save():
         return jsonify({"message": "저장되었습니다."})
     else:
         return jsonify({"message": "로그인한 사용자만 이용 가능합니다."})
+
+@app.route('/deleteSen', methods=['POST'])
+def deleteSen():
+    deleteSen = request.form['deleteSen']
+    userid = session['userid']
+
+    mM = user.memberManage()
+    mM.deleteSen(userid, deleteSen)
+
+    return 
+
+@app.route('/deletePara', methods=['POST'])
+def deletePara():
+    deletePara = request.form['deletePara']
+    userid = session['userid']
+
+    mM = user.memberManage()
+    mM.deletePara(userid, deletePara)
+
+    return 
 
 # run Flask app
 if __name__ == "__main__":
