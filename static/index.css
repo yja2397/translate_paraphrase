@@ -19,9 +19,9 @@ html, body {
 }
 
 nav{
-    min-width:760px;
+    min-width: 760px;
     max-width:50%;
-    float:left;
+    float: left;
     padding-bottom: 2.5rem;
 }
 
@@ -71,9 +71,6 @@ header {
     
 }
 
-#target {
-    border: 1px solid #34314c;
-}
 
 
 .menu{
@@ -140,9 +137,9 @@ header {
 }
 
 .text-input {
-    width: 100%;
+    width: 84%;
     padding: 20px 20px;
-    border: none;
+    border: 1px solid #34314c;
 }
 
 .chat-bubble {
@@ -215,7 +212,7 @@ header {
     width:80%;
 }
 
-.para button{
+button{
     float: right;
     width: 90px;
     height: 40px;
@@ -224,16 +221,24 @@ header {
     border:0;
 }
 
-.para .save{
+.save{
     background-color: #ff7473;
     color: white;
     cursor: pointer;
 }
 
-.para .copy{
+.copy{
     background-color: #47b8e0;
     color: white;
     cursor: pointer;
+}
+
+.search{
+    width: 64px;
+    background-color: #47b8e0;
+    color: white;
+    cursor: pointer;
+    margin-top: 8px;
 }
 
 .edit{

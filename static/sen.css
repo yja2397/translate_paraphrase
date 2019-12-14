@@ -68,7 +68,7 @@ header {
 
 .paragraph{
     margin:auto;
-    width:80%;
+    width:100%;
 }
 
 .para{
@@ -175,7 +175,11 @@ a:hover{
 
 #sentence{
     margin:auto;
-    width:80%;
+    width:100%;
+}
+
+.searched thead{
+    position: fixed;
 }
 
 .searched td, .searched th{

@@ -14,7 +14,8 @@ import sys
 from gtts import gTTS
 from time import sleep
 import pyglet
-from flask_gtts import gtts
+# from flask_gtts import gtts
+# from tempfile import TemporaryFile
 
 from module import db # db
 from module import user
@@ -24,7 +25,6 @@ h = httplib2.Http()
 okt = Okt()
 
 app = Flask(__name__)
-gtts(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -91,18 +91,25 @@ def load():
     uM = user.memberManage()
     paragraph = uM.lookPara(userid, time)
 
-    response_text = {"message": paragraph[0]['paragraph']}
+    message = paragraph[0]['paragraph']
+
+    tr = paraphrase.paraphrase()
+    translated = tr.papago(message, source="en")
+
+    response_text = {"message": message, "translated": translated}
 
     return jsonify(response_text)
 
 @app.route('/speak', methods=['POST'])
 def speak():
     message = request.form['message']
-
-    # gtts.say(lang='en-us', text=message)
+    
     tts = gTTS(text=message, lang='en')
     filename = 'tmp/speak.mp3'
     tts.save(filename)
+
+    # sf = TemporaryFile()
+    # tts.write_to_fp(sf)
 
     music = pyglet.media.load(filename, streaming=False)
     music.play()
@@ -115,6 +122,7 @@ def speak():
 @app.route('/insert', methods=['POST'])
 def insert():
     message = request.form['message']
+    text = request.form['text']
 
     message = message.replace("'", "''")
 
@@ -140,7 +148,12 @@ def insert():
 
         mM.insertSen(message, session['userid'])
 
-    return 'commit'
+    tr = paraphrase.paraphrase()
+    translated = tr.papago(text, source="en")
+
+    response_text = {"translated": translated}
+
+    return jsonify(response_text)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -203,9 +216,9 @@ def deleteSen():
     deleteSen = request.form['deleteSen']
     userid = session['userid']
 
-    print(deleteSen)
-
     mM = user.memberManage()
+    
+    deleteSen = deleteSen.replace("'", "''")
     mM.deleteSen(userid, deleteSen.split(",")[:-1])
 
     return ""
@@ -214,6 +227,8 @@ def deleteSen():
 def deletePara():
     deletePara = request.form['deletePara']
     userid = session['userid']
+
+    deletePara = deletePara.replace("'", "''")
 
     mM = user.memberManage()
     mM.deletePara(userid, deletePara.split(",")[:-1])

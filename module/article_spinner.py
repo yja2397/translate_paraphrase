@@ -59,7 +59,6 @@ class trigram():
         return list(set(result))
 
     def make_twitter(self, review):
-
         s = review.lower()
         tokens = nltk.tokenize.word_tokenize(s)
         for i in range(len(tokens) - 2):
@@ -83,4 +82,4 @@ class trigram():
 
 if __name__ == '__main__':
     print(trigram().list_COCA("I went to park, I want it"))
-    print(trigram().list_twitter("I went to park, I want it"))
+    # print(trigram().list_twitter("I went to park, I want it"))

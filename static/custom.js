@@ -66,18 +66,18 @@ $('#join').on('submit', function(e){
             userid: $('#userid').val(),
             pswd: $('#pswd').val(),
         }, handle_response);
-    }
+    
 
-    function handle_response(data) {
-        if(`${data.connect}` == "0"){
-            alert("회원가입을 축하합니다. 자동 로그인됩니다.");
-            location.href="index.html";
-        }else{
-            alert("이미 존재하는 아이디입니다.")
-            location.href="join.html";
+        function handle_response(data) {
+            if(`${data.connect}` == "0"){
+                alert("회원가입을 축하합니다. 자동 로그인됩니다.");
+                location.href="index.html";
+            }else{
+                alert("이미 존재하는 아이디입니다.")
+                location.href="join.html";
+            }
         }
     }
-
 });
 
     //유효성 체크할 함수
@@ -97,6 +97,8 @@ function invalidItem() {
 
         return false;
     }
+
+    return true;
 }
 
 
@@ -148,7 +150,7 @@ function move() {
         i = 1;
         var elem = $("#myBar");
         var width = 1;
-        var id = setInterval(frame, 300);
+        var id = setInterval(frame, 130);
         function frame() {
             if (width >= 99) {
                 clearInterval(id);
@@ -204,7 +206,9 @@ function save(){
 function logout(){
     if(confirm('정말 로그아웃하시겠습니까?')){
         $.post("/logout");
-        location.href="index.html";
+        setTimeout(function(){
+            location.href="index.html";
+        }, 1000);
     }
 }
 
@@ -225,24 +229,34 @@ $(".subj").click(function() {
     }, handle_response); // 글 불러오기
 
     function handle_response(data) {
-
-        var para = $('.paragraph')
         if ($("#write span").length){
             $("#write span").remove();
+            $("#view span").remove();
+
             $("#write").append(`
                 <textarea id="writeInput" cols="40" rows="8" >
                     ${data.message}
                 </textarea>
-            `)
+            `);
+            $("#view").append(`
+                <textarea id="viewInput" cols="40" rows="8" >
+                    ${data.translated}
+                </textarea>
+            `);
         }else{
             $("#writeInput").remove();
+            $("#viewInput").remove();
 
             $("#write").append(`
                 <textarea id="writeInput" cols="40" rows="8" >
                     ${data.message}
                 </textarea>
-            `)
-
+            `);
+            $("#view").append(`
+                <textarea id="viewInput" cols="40" rows="8" >
+                    ${data.translated}
+                </textarea>
+            `);
         }
     }
 });
@@ -250,28 +264,52 @@ $(".subj").click(function() {
 function goPara(order){
     message = $.trim($('.order' + order).text());
 
-    $.post("/insert", {
-        message: message,
-    }); // db 삽입
-
-    var para = $('.paragraph')
     if ($("#write span").length){
-        $("#write span").remove();
-        $("#write").append(`
-            <textarea id="writeInput" cols="40" rows="8" >
-                ${message}
-            </textarea>
-        `)
-    }else{
-        text = $.trim($("#writeInput").text() + " " + message);
-        
-        $("#writeInput").remove();
+        text = message;
 
-        $("#write").append(`
-            <textarea id="writeInput" cols="40" rows="8" >
-                ${text}
-            </textarea>
-        `)
+        $.post("/insert", {
+            message: message,
+            text: text
+        }, handle_response); // db 삽입
+        
+        function handle_response(data) {
+            $("#write span").remove();
+            $("#view span").remove();
+
+            $("#write").append(`
+                <textarea id="writeInput" cols="40" rows="8" >
+                    ${message}
+                </textarea>
+            `);
+            $("#view").append(`
+                <textarea id="viewInput" cols="40" rows="8" >
+                    ${data.translated}
+                </textarea>
+            `);
+        }
+    }else{
+        text = $.trim($("#writeInput").val() + " " + message);
+
+        $.post("/insert", {
+            message: message,
+            text: text
+        }, handle_response); // db 삽입
+
+        function handle_response(data) {
+            $("#writeInput").remove();
+            $("#viewInput").remove();
+
+            $("#write").append(`
+                <textarea id="writeInput" cols="40" rows="8" >
+                    ${text}
+                </textarea>
+            `);
+            $("#view").append(`
+                <textarea id="viewInput" cols="40" rows="8" >
+                    ${data.translated}
+                </textarea>
+            `);
+        }
 
     }
 }
@@ -293,7 +331,9 @@ function deleteSen(){
         // 삭제 sentence들.
 
         $(".checkbox").hide();
-        location.reload();
+        setTimeout(function(){
+            location.reload();
+        }, 1000);
     }
 }
 
@@ -314,7 +354,9 @@ function deletePara(){
         // 삭제 글들.
 
         $(".checkbox").hide();
-        location.reload();
+        setTimeout(function(){
+            location.reload();
+        }, 1000);
     }
 }
 

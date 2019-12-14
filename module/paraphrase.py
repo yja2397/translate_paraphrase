@@ -7,7 +7,6 @@ from module import biset
 from module import article_spinner
 from module import MWU
 
-
 class paraphrase():
     def isEnglishOrKorean(self, input_s):
         k_count = 0
@@ -19,14 +18,19 @@ class paraphrase():
                 e_count+=1
         return "k" if k_count>1 else "e"
 
-    def papago(self, message): # 파파고 번역
+    def papago(self, message, source="ko"): # 파파고 번역
 
         client_id = "daFbPHQo9YDVHRyjaPgy"
         client_secret = "P6qPCamZnK"
         # 클라이언트 id와 secret
+
+        if(source == "ko"):
+            target = "en"
+        else:
+            target = "ko"
         
         encText = urllib.parse.quote(message)
-        data = "source=ko&target=en&text=" + encText
+        data = "source="+source+"&target="+target+"&text=" + encText
         url = "https://openapi.naver.com/v1/papago/n2mt"
         
         request = urllib.request.Request(url)
@@ -39,6 +43,7 @@ class paraphrase():
             response_body = response.read()    
             res = response_body.decode('utf-8')
             i = json.loads(res)
+            print(i)
 
             return i['message']['result']['translatedText']
         else:
@@ -58,11 +63,11 @@ class paraphrase():
 
     def COCA(self, message):
         tri = article_spinner.trigram()
-        return tri.list_COCA(message)
+        return tri.list_COCA(message) + tri.list_twitter(message)
 
-    def twitter(self, message):
-        tri = article_spinner.trigram()
-        return tri.list_twitter(message)
+    # def twitter(self, message):
+    #     tri = article_spinner.trigram()
+    #     return tri.list_twitter(message)
     
     def MWU(self, message):
         mwu = MWU.MWU()
@@ -82,9 +87,9 @@ class paraphrase():
         start = time.time()
         mC = self.COCA(message) # COCA 사용한 비슷한 문장들
         print("COCA : " + str(time.time() - start))
-        start = time.time()
-        mT = self.twitter(message) # twitter 사용한 비슷한 문장들
-        print("TWITTER : " + str(time.time() - start))
+        # start = time.time()
+        # mT = self.twitter(message) # twitter 사용한 비슷한 문장들
+        # print("TWITTER : " + str(time.time() - start))
         start = time.time()
         mB = self.bisets(message) # DB에서 추출한 비슷한 문장들
         print("DB : " + str(time.time() - start))
@@ -92,7 +97,7 @@ class paraphrase():
         # mS = self.tokin(message) # 동의어를 이용한 비슷한 문장들
         
         result = [message] # 번역된 것
-        result += mM + mR + mC + mT + mB # + mS
+        result += mM + mR + mC + mB # + mS
 
         return result
 
@@ -126,5 +131,5 @@ class paraphrase():
 # run Flask app
 if __name__ == "__main__":
     translate = paraphrase()
-    result = translate.manyResult("Android studios are too hard to learn.")
+    result = translate.papago("Android studios are too hard to learn.", source="en")
     print(result)
