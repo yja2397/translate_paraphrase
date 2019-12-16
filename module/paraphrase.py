@@ -64,10 +64,6 @@ class paraphrase():
     def COCA(self, message):
         tri = article_spinner.trigram()
         return tri.list_COCA(message) + tri.list_twitter(message)
-
-    # def twitter(self, message):
-    #     tri = article_spinner.trigram()
-    #     return tri.list_twitter(message)
     
     def MWU(self, message):
         mwu = MWU.MWU()
@@ -85,16 +81,12 @@ class paraphrase():
         mR = self.wordnet(message) # wordnet에서 추출한 비슷한 문장들
         print("wordnet : " + str(time.time() - start))
         start = time.time()
-        mC = self.COCA(message) # COCA 사용한 비슷한 문장들
-        print("COCA : " + str(time.time() - start))
-        # start = time.time()
-        # mT = self.twitter(message) # twitter 사용한 비슷한 문장들
-        # print("TWITTER : " + str(time.time() - start))
+        mC = self.COCA(message) # COCA, Twitter 사용한 비슷한 문장들
+        print("Trigram : " + str(time.time() - start))
         start = time.time()
         mB = self.bisets(message) # DB에서 추출한 비슷한 문장들
         print("DB : " + str(time.time() - start))
         start = time.time()
-        # mS = self.tokin(message) # 동의어를 이용한 비슷한 문장들
         
         result = [message] # 번역된 것
         result += mM + mR + mC + mB # + mS
@@ -125,11 +117,4 @@ class paraphrase():
         return result
     
     def manyResult(self, message):
-
         return self.processResult(message)
-
-# run Flask app
-if __name__ == "__main__":
-    translate = paraphrase()
-    result = translate.papago("Android studios are too hard to learn.", source="en")
-    print(result)

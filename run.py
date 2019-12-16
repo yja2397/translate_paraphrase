@@ -2,11 +2,9 @@ from flask import Flask, request, session, jsonify, render_template
 import os
 import requests
 import json
-# import pusher
 import httplib2
 import json
 import urllib.request
-from konlpy.tag import Okt
 from collections import Counter
 import pymysql
 from datetime import datetime
@@ -14,15 +12,12 @@ import sys
 from gtts import gTTS
 from time import sleep
 import pyglet
-# from flask_gtts import gtts
-# from tempfile import TemporaryFile
 
 from module import db # db
 from module import user
 from module import paraphrase
 
 h = httplib2.Http()
-okt = Okt()
 
 app = Flask(__name__)
 
@@ -107,9 +102,6 @@ def speak():
     tts = gTTS(text=message, lang='en')
     filename = 'tmp/speak.mp3'
     tts.save(filename)
-
-    # sf = TemporaryFile()
-    # tts.write_to_fp(sf)
 
     music = pyglet.media.load(filename, streaming=False)
     music.play()

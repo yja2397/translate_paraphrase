@@ -9,7 +9,6 @@ class biset(paraInterface):
         words = []
         for (word, t) in self.tag(sentence):
             if self.paraphraseable(t) and word not in ["i","I"]:
-                # print(word)
                 words.append(word)
         
         return words
@@ -40,9 +39,5 @@ class biset(paraInterface):
         else:
             return []
 
-# run Flask app
-if __name__ == "__main__":
-    translate = biset()
-    translate.bisetData("Every man has a knack for rolling.")
 
 

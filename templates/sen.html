@@ -1,4 +1,4 @@
-<!-- /templates/index.html -->
+<!-- /templates/sen.html -->
 
 <!doctype html>
 <html lang="en">
@@ -9,7 +9,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/sen.css">
-    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="../static/jquery.tablesorter.min.js"></script>
 	<link rel="stylesheet" href="../static/blue_style.css" type="text/css">
@@ -40,33 +39,33 @@
         <div class="para">
             <button class="modify" style="margin-right:48px;" onclick="deleteSen()">삭제</a>
         </div>
-        <form>
-                    <div style="margin: auto; width: 80%; height: 480px; overflow: auto">
-        <table id="sentence" class="tablesorter">
-            <thead>
-                <tr class="searched">
-                    <td class="checkbox" style="border:1px solid black; background-color: black;"><input id="allCheck" type="checkbox" onclick="gogogo(this)" /></td>
-                    <th class="title sen">검색한 문장</th>
-                    <th class="title cnt">검색횟수</th>
-                </tr>
-            </thead>
-                <tbody>
-                    {% if not rows %}
+        <form>  
+            <div style="margin: auto; width: 80%; height: 480px; overflow: auto">
+                <table id="sentence" class="tablesorter">
+                    <thead>
                         <tr class="searched">
-                            <td colspan="3">검색한 문장이 없습니다.</td>
+                            <td class="checkbox" style="border:1px solid black; background-color: black;"><input id="allCheck" type="checkbox" onclick="gogogo(this)" /></td>
+                            <th class="title sen">검색한 문장</th>
+                            <th class="title cnt">검색횟수</th>
                         </tr>
-                    {% else %}
-                    {% for row in rows %}
-                        <tr class="searched">
-                            <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['sentence']}}" /></td>
-                            <td class="sen order" onclick="speakPara()">{{row['sentence']}}</td>
-                            <td class="cnt">{{row['searchCnt']}}</td>
-                        </tr>
-                    {% endfor %}
-                    {% endif %}
-                </tbody>
-        </table>
-                    </div>
+                    </thead>
+                        <tbody>
+                            {% if not rows %}
+                                <tr class="searched">
+                                    <td colspan="3">검색한 문장이 없습니다.</td>
+                                </tr>
+                            {% else %}
+                            {% for row in rows %}
+                                <tr class="searched">
+                                    <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['sentence']}}" /></td>
+                                    <td class="sen order" onclick="speakPara()">{{row['sentence']}}</td>
+                                    <td class="cnt">{{row['searchCnt']}}</td>
+                                </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                </table>
+            </div>
         </form> 
     </div>
 </article>

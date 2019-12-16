@@ -1,4 +1,4 @@
-<!-- /templates/index.html -->
+<!-- /templates/para.html -->
 
 <!doctype html>
 <html lang="en">
@@ -39,35 +39,32 @@
         <div class="para">
             <button class="modify" style="margin-right:20px;" onclick="deletePara()">삭제</a>
         </div>
-        <table id="choice" class="tablesorter">
-            <thead>
-            <tr>
-                <td class="checkbox" style="border:1px solid black; background-color: black;"><input id="allCheck" type="checkbox" name="chk" onclick="gogogo(this)" /></td>
-                <th class="title subj">제목</th>
-                <th class="title time">작성일자</th>
-            </tr>
-            </thead>
-            <tbody>
-                <!-- <c:out value="{{data}}" escapeXml="false" /> -->
-                <!-- <c:out value='${data.replaceAll("\\\<.*?\\\>","")}' /> -->
-            <!-- {% block body %} -->
-                {% if not rows %}
-                        <tr>
-                            <td colspan="2">저장한 글이 없습니다.</td>
-                        </tr>
-                {% else %}
-                    {% for row in rows %}
+        <div style="margin: auto; width: 80%; height: 480px; overflow: auto">
+            <table id="choice" class="tablesorter">
+                <thead>
+                <tr>
+                    <td class="checkbox" style="border:1px solid black; background-color: black;"><input id="allCheck" type="checkbox" name="chk" onclick="gogogo(this)" /></td>
+                    <th class="title subj">제목</th>
+                    <th class="title time">작성일자</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% if not rows %}
                             <tr>
-                                <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['paratime']}}" /></td>
-                                <td class="subj" onclick="load(this)">{{row['paratitle']}}</td>
-                                <td class="time order{{loop.index}}">{{row['paratime']}}</td>
+                                <td colspan="2">저장한 글이 없습니다.</td>
                             </tr>
-                    {% endfor %}
-                {% endif %}
-            <!-- {% endblock %} -->
-            <!-- <a class="order{{data}}" /> -->
-            </tbody>
-        </table>
+                    {% else %}
+                        {% for row in rows %}
+                                <tr>
+                                    <td class="checkbox" style="border:1px solid black"><input type="checkbox" name="chk" value="{{row['paratime']}}" /></td>
+                                    <td class="subj" onclick="load(this)">{{row['paratitle']}}</td>
+                                    <td class="time order{{loop.index}}">{{row['paratime']}}</td>
+                                </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </article>
 <nav>
@@ -76,19 +73,13 @@
             <span>
                 작성한 글의 제목을 클릭하십시오.
             </span>
-            
-            <!-- <textarea id="writeInput" cols="40" rows="8" >Hello World</textarea> -->
-            
         </div>
         <div id="view" class="edit">
             <span>
                 위 문단이 번역된 결과가 여기에 표시됩니다.
             </span>
-            
-            <!-- <textarea id="viewInput" cols="40" rows="8" >Hello World</textarea> -->
         </div>
         <div class="para">
-            <!-- <button class="save">SAVE</button> -->
             <button class="copy" onclick="copy()">COPY</button>
         </div>
     </div>
@@ -96,7 +87,6 @@
 <footer>
 
 </footer>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="../static/custom.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
