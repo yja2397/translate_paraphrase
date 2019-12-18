@@ -190,12 +190,12 @@ header {
     color: #34314c;
     display:table-cell;
     vertical-align: middle;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
-.chat-content:hover{
+/* .chat-content:hover{
     opacity: 0.2;
-}
+} */
 
 .loading{
     display: inline-block;

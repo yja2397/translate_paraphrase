@@ -123,11 +123,3 @@ class memberManage():
                 self.db.commit()
         
         return ""
-
-if __name__ == "__main__":
-    user = memberManage()
-    data = user.findSen("admin")
-
-    for i in data:
-        print(i['sentence'])
-        print(i['searchCnt'])

@@ -184,7 +184,7 @@ function copy(){
 
 function save(){    
     if ($("#writeInput").length){
-        text = $.trim($("#writeInput").text());
+        text = $.trim($("#writeInput").val());
 
         title = prompt("글 제목");
 
@@ -212,14 +212,14 @@ function logout(){
     }
 }
 
-function speakPara(order){
-    message = $.trim($('.order' + order).text());
+// function speakPara(order){
+//     message = $.trim($('.order' + order).text());
 
-    $.post("/speak", {
-        message: message,
-    }); // 말하기
+//     $.post("/speak", {
+//         message: message,
+//     }); // 말하기
     
-}
+// }
 
 $(".subj").click(function() {
     time = $.trim($('.order' + String($(".subj").index(this))).text());

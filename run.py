@@ -67,7 +67,7 @@ def trans():
 
         response += """
             <div class="chat-bubble result">
-                <span class="chat-content order{1}" onclick='speakPara({1})' title="듣기">
+                <span class="chat-content order{1}">
                     {0}
                 </span>
                 <img class="insert" src="/static/insert.png" onclick='goPara({1})'/>

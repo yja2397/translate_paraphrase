@@ -79,7 +79,3 @@ class trigram():
                 result.append(text)
 
         return list(set(result))
-
-if __name__ == '__main__':
-    print(trigram().list_COCA("I went to park, I want it"))
-    # print(trigram().list_twitter("I went to park, I want it"))

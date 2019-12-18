@@ -201,7 +201,7 @@ a:hover{
 }
 
 .sen:hover:not(.title){
-    cursor:pointer;
+    /* cursor:pointer; */
     color: #47b8e0;
 }
 
